@@ -99,28 +99,19 @@
         <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>本篇论文是中科院和其他公司合作的一篇结合超分辨和语义分割的文章,文章发表在2020CVPR.</p>
 <p>Github地址: https: //github.com/wanglixilinx/DSRL(未开源)</p>
 <ul>
-<li><p>数据集：CityScapes、COCO、MS</p>
-</li>
-<li><p>解决问题：对于同一输入,分辨率越高,语义分割的精度也越高,但导致计算量的增加,作者的出发点在于从低分辨的输入得到较为精准的高分辨率语义分割。</p>
-</li>
-<li><p>核心思想：将超分辨任务与语义分割相结合。超分辨任务在重构图像时,会学到较好的高层次的语义特征,那么怎样从低分辨率恢复至高分辨率,作者提出用超分辨任务去指导语义分割分辨率的恢复(适用于计算资源受限的移动设备)。</p>
-</li>
+<li>数据集：CityScapes、COCO、MS</li>
+<li>解决问题：对于同一输入,分辨率越高,语义分割的精度也越高,但导致计算量的增加,作者的出发点在于从低分辨的输入得到较为精准的高分辨率语义分割。</li>
+<li>核心思想：将超分辨任务与语义分割相结合。超分辨任务在重构图像时,会学到较好的高层次的语义特征,那么怎样从低分辨率恢复至高分辨率,作者提出用超分辨任务去指导语义分割分辨率的恢复(适用于计算资源受限的移动设备)。</li>
 </ul>
-<h1 id="Contributions"><a href="#Contributions" class="headerlink" title="Contributions"></a>Contributions</h1><p>​    针对上面的问题,作者在本篇中有了如下的方法贡献:</p>
-<ol>
-<li>提出双重超分辨率学习(DSRL)来保持高分辨率表示。DSRL包含了三个模块分别是SSSR、SISR、FA。具体来说,将超分辨的思想整合到现有的语义分割的pipeline中。</li>
-<li>验证了DSRL框架的泛化性,可以很容易扩展到其他任务中。</li>
-<li>实验证明了该方法在语义分割和人体姿势估计方面的有效性。使用相似的计算量,性能可以提高&gt;=2%;达到相当的性能需要的FLOPs减少30%。</li>
-</ol>
-<h1 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h1><ul>
-<li><p>网络组成</p>
-<img src="C:\Users\Cassie\AppData\Roaming\Typora\typora-user-images\image-20200710163551094.png" alt="image-20200710163551094" style="zoom:80%;" /></li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a href="/cassieyy.github.io/2020/07/11/Dual-Super-Resolution-Learning-for-Semantic-Segmentation/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cassieyy.github.io/cassieyy.github.io/2020/07/11/Dual-Super-Resolution-Learning-for-Semantic-Segmentation/" data-id="ckchc8a9j0000g8up16aa96nf" class="article-share-link">Share</a>
+      <a data-url="https://cassieyy.github.io/cassieyy.github.io/2020/07/11/Dual-Super-Resolution-Learning-for-Semantic-Segmentation/" data-id="ckchc9mjv0000tkupe1p9a7eq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/cassieyy.github.io/tags/for-test/" rel="tag">for test</a></li></ul>
@@ -163,7 +154,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cassieyy.github.io/cassieyy.github.io/2020/07/05/Cassie-s-test-blog/" data-id="ckchc2tiy0000rgup40x0einr" class="article-share-link">Share</a>
+      <a data-url="https://cassieyy.github.io/cassieyy.github.io/2020/07/05/Cassie-s-test-blog/" data-id="ckchc9mjz0001tkup6ahke8n8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/cassieyy.github.io/tags/just-for-test/" rel="tag">just for test!</a></li></ul>
