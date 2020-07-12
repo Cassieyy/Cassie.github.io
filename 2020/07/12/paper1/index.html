@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/5.png">
 <meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/6.png">
 <meta property="article:published_time" content="2020-07-12T05:30:02.000Z">
-<meta property="article:modified_time" content="2020-07-12T05:41:05.838Z">
+<meta property="article:modified_time" content="2020-07-12T05:59:36.802Z">
 <meta property="article:author" content="Cassie(Pengyue Lu)">
 <meta property="article:tag" content="Paper reading notes in Week1">
 <meta name="twitter:card" content="summary">
@@ -152,15 +152,14 @@
 <p>​                    衡量SSSR和SISR之间相似矩阵的距离：</p>
 <p>​                                                   $ L_{fa} = \frac{1}{W^{‘2}H^{‘2}} \mathop{\Sigma}\limits_{i = 1}^{W^{‘}H^{‘}} \mathop{\Sigma}\limits_{j = 1}^{W^{‘}H^{‘}} \Vert S_{ij}^{seg} - S_{ij}^{sr} \Vert_{q}$</p>
 <h1 id="LossFunction"><a href="#LossFunction" class="headerlink" title="LossFunction"></a>LossFunction</h1><ul>
-<li>total loss function</li>
-</ul>
-<p>​                                                                       $ L = L_{ce} + \omega_{1}L_{mse} + \omega_{2}L_{fa}$</p>
-<ul>
+<li><p>total loss function</p>
+<p>  $ L = L_{ce} + \omega_{1}L_{mse} + \omega_{2}L_{fa}$</p>
+</li>
 <li><p>用于SSSR的交叉熵损失$L_{ce}$</p>
-<p>​                                                                       $L_{ce} = \frac{1}{N} \mathop{\Sigma}\limits_{i = 1}^{N}-y_ilog{p_i}$</p>
+<p>$L_{ce} = \frac{1}{N} \mathop{\Sigma}\limits_{i = 1}^{N}-y_ilog{p_i}$</p>
 </li>
 <li><p>用于SISR的均方误差损失$L_{mse}$</p>
-<p>​                                                              $L_{mse} = \frac{1}{N} \mathop{\Sigma}\limits_{i = 1}^{N} \Vert SISR(X_{i}) - Y_{i}\Vert^2$</p>
+<p>$L_{mse} = \frac{1}{N} \mathop{\Sigma}\limits_{i = 1}^{N} \Vert SISR(X_{i}) - Y_{i}\Vert^2$</p>
 </li>
 </ul>
 <h1 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h1><ul>
@@ -185,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/" data-id="ckcintwxl0001coup5vssehkw" class="article-share-link">Share</a>
+      <a data-url="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/" data-id="ckcio8s0n000114up996bgvut" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/cassieyy.github.io/tags/Paper-reading-notes-in-Week1/" rel="tag">Paper reading notes in Week1</a></li></ul>
