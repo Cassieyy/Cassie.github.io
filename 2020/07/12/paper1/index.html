@@ -7,12 +7,12 @@
   
   <title>paper1 | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面本篇论文是中科院和其他公司合作的一篇结合超分辨和语义分割的文章,文章发表在2020CVPR. Github地址: https: &#x2F;&#x2F;github.com&#x2F;wanglixilinx&#x2F;DSRL(未开源)  数据集：CityScapes、COCO、MS 解决问题：对于同一输入,分辨率越高,语义分割的精度也越高,但导致计算量的增加,作者的出发点在于从低分辨的输入得到较为精准的高分辨率语义分割。 核">
+  <meta name="description" content="写在前面本篇论文《Dual Super-Resolution Learning for Semantic Segmentation》是中科院和其他公司合作的一篇结合超分辨和语义分割的文章,文章发表在2020CVPR. Github地址: https: &#x2F;&#x2F;github.com&#x2F;wanglixilinx&#x2F;DSRL(未开源)  数据集：CityScapes、COCO、MS 解决问题：对于同一输入,分辨">
 <meta property="og:type" content="article">
 <meta property="og:title" content="paper1">
 <meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:description" content="写在前面本篇论文是中科院和其他公司合作的一篇结合超分辨和语义分割的文章,文章发表在2020CVPR. Github地址: https: &#x2F;&#x2F;github.com&#x2F;wanglixilinx&#x2F;DSRL(未开源)  数据集：CityScapes、COCO、MS 解决问题：对于同一输入,分辨率越高,语义分割的精度也越高,但导致计算量的增加,作者的出发点在于从低分辨的输入得到较为精准的高分辨率语义分割。 核">
+<meta property="og:description" content="写在前面本篇论文《Dual Super-Resolution Learning for Semantic Segmentation》是中科院和其他公司合作的一篇结合超分辨和语义分割的文章,文章发表在2020CVPR. Github地址: https: &#x2F;&#x2F;github.com&#x2F;wanglixilinx&#x2F;DSRL(未开源)  数据集：CityScapes、COCO、MS 解决问题：对于同一输入,分辨">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/1.png">
 <meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/2.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/5.png">
 <meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/6.png">
 <meta property="article:published_time" content="2020-07-12T05:30:02.000Z">
-<meta property="article:modified_time" content="2020-07-12T05:59:36.802Z">
+<meta property="article:modified_time" content="2020-07-12T13:06:54.152Z">
 <meta property="article:author" content="Cassie(Pengyue Lu)">
 <meta property="article:tag" content="Paper reading notes in Week1">
 <meta name="twitter:card" content="summary">
@@ -104,7 +104,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>本篇论文是中科院和其他公司合作的一篇结合超分辨和语义分割的文章,文章发表在2020CVPR.</p>
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>本篇论文《Dual Super-Resolution Learning for Semantic Segmentation》是中科院和其他公司合作的一篇结合超分辨和语义分割的文章,文章发表在2020CVPR.</p>
 <p>Github地址: https: //github.com/wanglixilinx/DSRL(未开源)</p>
 <ul>
 <li>数据集：CityScapes、COCO、MS</li>
@@ -148,18 +148,18 @@
 </ul>
 </li>
 </ul>
-<p>​                                                              $S_{ij} = (\frac{F_i}{\Vert F_i \Vert_{p}})^T·\frac{F_j}{\Vert F_j \Vert_{p}})$</p>
-<p>​                    衡量SSSR和SISR之间相似矩阵的距离：</p>
-<p>​                                                   $ L_{fa} = \frac{1}{W^{‘2}H^{‘2}} \mathop{\Sigma}\limits_{i = 1}^{W^{‘}H^{‘}} \mathop{\Sigma}\limits_{j = 1}^{W^{‘}H^{‘}} \Vert S_{ij}^{seg} - S_{ij}^{sr} \Vert_{q}$</p>
+<p>​                                                              $$S_{ij} = (\frac{F_i}{\Vert F_i \Vert_{p}})^T·\frac{F_j}{\Vert F_j \Vert_{p}})$$</p>
+<p>​                    衡量SSSR和SISR之间相似矩阵的距离：$\lambda$</p>
+<p>​                                                   $$ L_{fa} = \frac{1}{W^{‘2}H^{‘2}} \mathop{\Sigma}\limits_{i = 1}^{W^{‘}H^{‘}} \mathop{\Sigma}\limits_{j = 1}^{W^{‘}H^{‘}} \Vert S_{ij}^{seg} - S_{ij}^{sr} \Vert_{q}$$</p>
 <h1 id="LossFunction"><a href="#LossFunction" class="headerlink" title="LossFunction"></a>LossFunction</h1><ul>
 <li><p>total loss function</p>
-<p>  $ L = L_{ce} + \omega_{1}L_{mse} + \omega_{2}L_{fa}$</p>
+<p>  $$ L = L_{ce} + \omega_{1}L_{mse} + \omega_{2}L_{fa}$$</p>
 </li>
-<li><p>用于SSSR的交叉熵损失$L_{ce}$</p>
-<p>$L_{ce} = \frac{1}{N} \mathop{\Sigma}\limits_{i = 1}^{N}-y_ilog{p_i}$</p>
+<li><p>用于SSSR的交叉熵损失$$L_{ce}$$</p>
+<p>$$L_{ce} = \frac{1}{N} \mathop{\Sigma}\limits_{i = 1}^{N}-y_ilog{p_i}$$</p>
 </li>
-<li><p>用于SISR的均方误差损失$L_{mse}$</p>
-<p>$L_{mse} = \frac{1}{N} \mathop{\Sigma}\limits_{i = 1}^{N} \Vert SISR(X_{i}) - Y_{i}\Vert^2$</p>
+<li><p>用于SISR的均方误差损失$$L_{mse}$$</p>
+<p>$$L_{mse} = \frac{1}{N} \mathop{\Sigma}\limits_{i = 1}^{N} \Vert SISR(X_{i}) - Y_{i}\Vert^2$$</p>
 </li>
 </ul>
 <h1 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h1><ul>
@@ -184,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/" data-id="ckcio8s0n000114up996bgvut" class="article-share-link">Share</a>
+      <a data-url="https://cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/" data-id="ckcket4qe0001uoup0pe51z82" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/cassieyy.github.io/tags/Paper-reading-notes-in-Week1/" rel="tag">Paper reading notes in Week1</a></li></ul>
