@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/cassieyy.github.io/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/cassieyy.github.io/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/cassieyy.github.io/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/cassieyy.github.io/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/cassieyy.github.io/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/cassieyy.github.io/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/cassieyy.github.io/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写在前面本篇论文《Deep Cascaded Attention Network for Multi-task Brain Tumor Segmentation》是中科大和其他高校合作的一篇结合attention机制的文章,文章发表在2020MICCAI.  Github地址: 未给出  数据集：BraTS challenge 2018  解决问题：用cascaded model解决muti-ta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="paper2">
+<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/index.html">
+<meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
+<meta property="og:description" content="写在前面本篇论文《Deep Cascaded Attention Network for Multi-task Brain Tumor Segmentation》是中科大和其他高校合作的一篇结合attention机制的文章,文章发表在2020MICCAI.  Github地址: 未给出  数据集：BraTS challenge 2018  解决问题：用cascaded model解决muti-ta">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/1.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/0.jpg">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/2.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/3.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/4.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/heatmap.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/lossfunction.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/exp1.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/exp2.png">
+<meta property="article:published_time" content="2020-07-16T01:56:58.000Z">
+<meta property="article:modified_time" content="2020-07-16T02:07:03.188Z">
+<meta property="article:author" content="Cassie(Pengyue Lu)知乎@Cassie">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/cassieyy.github.io/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/"/>
+
+
+
+
+
+  <title>paper2 | Hi~ This is Cassie's blog!</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/cassieyy.github.io/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hi~ This is Cassie's blog!</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Research direction: Medical image process</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/cassieyy.github.io/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/cassieyy.github.io/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cassieyy.github.io/cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cassie(Pengyue Lu)知乎@Cassie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/cassieyy.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi~ This is Cassie's blog!">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">paper2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-16T09:56:58+08:00">
+                2020-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>本篇论文《Deep Cascaded Attention Network for Multi-task Brain Tumor Segmentation》是中科大和其他高校合作的一篇结合attention机制的文章,文章发表在2020MICCAI.</p>
+<ul>
+<li><p>Github地址: 未给出</p>
+</li>
+<li><p>数据集：BraTS challenge 2018</p>
+</li>
+<li><p>解决问题：用cascaded model解决muti-task的问题会造成model redundancy/train complexity/task isolation</p>
+</li>
+<li><p>本文贡献：</p>
+<ul>
+<li>1.将subtask分解为不同的branches(实质上仍为single model),也就是说再一些特征提取时可以共享extractor,从而减少参数降低模型的复杂性;</li>
+<li>2.BraTS challenge是一个分级的分割任务(<a href="https://zhuanlan.zhihu.com/p/159202689" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/159202689</a> 对数据集和此任务的解释可以看我知乎文章),所以作者想到把Cascaded Attention Module(以下简称CAM)加到branch之间;</li>
+<li>3.作者认为backbone——3D-Unet的skip-connection非常低效,又因为原来concat的两个feature存在较大的gap,所以作者用FBM替代原来的skip-connection,既能缓解feature fusion gap(也可以换一种说法是指导特征融合),也能获取层间关系;</li>
+<li>4.作者可视化了CAM以证明该模块的有效性。</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h1><p>​    BraTS challenge是对大脑不同时期的胶质瘤进行分割。MRI有多种模态,不同模态的侧重点是不一样的,比如说T1序列可能侧重于结构信息,T2序列比较侧重于病灶信息(我瞎猜的),因为异构的多样性,所以放射科医生对胶质瘤的评估需要专业的经验且这种经验因医生而异,因此有一套自动化的分割模型是对病人情况的诊断是非常必要的。</p>
+<p>​    作者认为对于脑肿瘤分割任务,well-designed的模型设计很重要,但一些先验知识(比如肿瘤子区域的层间关系)一样有助于多任务的分割。作者比较了利用先验知识进行分割的两种网络“Model Cascaded”(MC) strategy和One-pass Multi-task Network(OM-Net),它们采取的做法是把三个任务整合到一个网络,再通过curriculum learning(课程学习,先学习简单的再学习困难的)的方法。</p>
+<p>​    这样做的弊端在于：1. 增加模型的复杂度:因为三个任务的模型几乎是完全一样的;2.将multi-task通one-by-one的方式依次训练就会导致后面模型训练的质量非常依赖于前面模型训练的效果。同时值得我们注意的是,CNN的feature包含了非常多的位置(localization info我不太知道怎么翻译)信息可以被充分利用。</p>
+<p>​    此外作者在BraTS challenge2018数据集上取得了很好的指标性结果,只用了1/4最好模型的参数量却达到了和它相当的分割效果。baseline选用的是NoNewNet(即nnNet),NoNewNet+是用了额外的数据集的。</p>
+<h1 id="2-Method"><a href="#2-Method" class="headerlink" title="2 Method"></a>2 Method</h1><h3 id="Backbone-Network-Architecture"><a href="#Backbone-Network-Architecture" class="headerlink" title="Backbone Network Architecture"></a>Backbone Network Architecture</h3><p>我们先来看此网络的backbone：</p>
+<img src="/cassieyy.github.io/2020/07/16/paper2/1.png" class>
+
+<p>这可以视为3D Res-Unet,3D网络网络更多地利用了连续切片的一致性，本质上包含了三维卷积核的多视图融合。为了避免梯度发散加速模型收敛,残差连接被应用其中.残差块采用bottleneck的结构(即先减少通道数,再卷积最后再还原通道数)。</p>
+<h3 id="Feature-Bridge-Module"><a href="#Feature-Bridge-Module" class="headerlink" title="Feature Bridge Module"></a>Feature Bridge Module</h3><p>可以从上图看出,此网络和最原始的3D Unet最大的不同点在于skip-connection被更改了。作者认为直接把low-level和high-level即spatial feature&amp;semantic feature结合是lack efficiency的,FBM级联了2.5D Residual block和3D block去平衡切片之间和切片内部的权重。</p>
+<h3 id="Deep-Cascaded-Attention-Network"><a href="#Deep-Cascaded-Attention-Network" class="headerlink" title="Deep Cascaded Attention Network"></a>Deep Cascaded Attention Network</h3><p>因为本次分割任务是分层次的,三个分割任务,但有包含关系见下图:</p>
+<img src="/cassieyy.github.io/2020/07/16/paper2/0.jpg" class>
+
+<p>前面提到的MC和OM-Net通过one by one的训练策略充分利用了这层次关系,但这样的做法会导致model redundancy和task isolation。为解决这个问题作者提出了DCAN,网络结构如下图所示：</p>
+<img src="/cassieyy.github.io/2020/07/16/paper2/2.png" class>
+
+<p>作者认为对于多任务,低层次的feature map主要包含灰度或者边缘信息,不同的任务在low level这里只有很小的差异但在high-level这里差异就很明显了,所以在low-level这里三个branches共用了一个feature extractor。每个branch都以前面提到的Res-Unet(加FBM)为backbone,对每个分支都把最后的max-pooling换成了dilated conv,这样做的原因是增大感受野减少信息丢失</p>
+<h3 id="Cascaded-Attention-Module"><a href="#Cascaded-Attention-Module" class="headerlink" title="Cascaded Attention Module"></a>Cascaded Attention Module</h3><p>high-level包含丰富的位置信息,为了充分利用这些特征信息,引入CAM去提取位置信息隐式地指导后面branch训练</p>
+<p>(这样的话其实跟cascade差不了太多,just最开始的特征提取器是三个branch共享的)</p>
+<p>从上面的网络结构图可以看出：</p>
+<img src="/cassieyy.github.io/2020/07/16/paper2/3.png" class>
+
+<p>F()表示上图右边的Residual block+Sigmoid()生成的attention map(最开始的时候作者在branch之间加入Attention也就是$X_{et}$来自$X_s$和$Y_{tc}$ 但发现效果不是特别好$Y_{tc}$不能提供足够的location info,所以后来作者先concat($Y_{wt}Y_{tc}$)再得到Attention map)</p>
+<h3 id="Visualization-of-Cascaded-Attention-map"><a href="#Visualization-of-Cascaded-Attention-map" class="headerlink" title="Visualization of Cascaded Attention map"></a>Visualization of Cascaded Attention map</h3><img src="/cassieyy.github.io/2020/07/16/paper2/4.png" class>
+
+<p>Attention可视化结果由上面公式实现,可视化结果如下图:</p>
+<img src="/cassieyy.github.io/2020/07/16/paper2/heatmap.png" class>
+
+<h1 id="3-Experiments"><a href="#3-Experiments" class="headerlink" title="3 Experiments"></a>3 Experiments</h1><p>数据集是BraTS challenge 2018,采用mirror/random scaling/random rotate/random shift进行数据增强,损失函数采用Diceloss+Focalloss</p>
+<img src="/cassieyy.github.io/2020/07/16/paper2/lossfunction.png" class>
+
+<p>指标性结果：</p>
+<img src="/cassieyy.github.io/2020/07/16/paper2/exp1.png" class>
+
+<img src="/cassieyy.github.io/2020/07/16/paper2/exp2.png" class>
+
+<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4 Conclusion"></a>4 Conclusion</h1><ul>
+<li>利用分割子区域间的包含关系作为先验信息;</li>
+<li>DCAN利用层间级联attention机制同时完成多任务而不是将multi-task问题拆成多个连续的model;</li>
+<li>AttentionMap的可视化结果表明了CAM的有效性,上个branch的结果确实可以帮助后面branch进行训练;</li>
+<li>FBM缓解了long-range feature fusion gap;</li>
+<li>用1/4参数达到了和最优模型相当的结果。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/cassieyy.github.io/2020/07/12/paper1/" rel="next" title="paper1">
+                <i class="fa fa-chevron-left"></i> paper1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/cassieyy.github.io/images/avatar.gif"
+                alt="Cassie(Pengyue Lu)知乎@Cassie" />
+            
+              <p class="site-author-name" itemprop="name">Cassie(Pengyue Lu)知乎@Cassie</p>
+              <p class="site-description motion-element" itemprop="description">Bitter before sweet!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/cassieyy.github.io/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Method"><span class="nav-number">3.</span> <span class="nav-text">2 Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Backbone-Network-Architecture"><span class="nav-number">3.0.1.</span> <span class="nav-text">Backbone Network Architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feature-Bridge-Module"><span class="nav-number">3.0.2.</span> <span class="nav-text">Feature Bridge Module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deep-Cascaded-Attention-Network"><span class="nav-number">3.0.3.</span> <span class="nav-text">Deep Cascaded Attention Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cascaded-Attention-Module"><span class="nav-number">3.0.4.</span> <span class="nav-text">Cascaded Attention Module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visualization-of-Cascaded-Attention-map"><span class="nav-number">3.0.5.</span> <span class="nav-text">Visualization of Cascaded Attention map</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Experiments"><span class="nav-number">4.</span> <span class="nav-text">3 Experiments</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Conclusion"><span class="nav-number">5.</span> <span class="nav-text">4 Conclusion</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cassie(Pengyue Lu)知乎@Cassie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/cassieyy.github.io/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/cassieyy.github.io/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/cassieyy.github.io/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/cassieyy.github.io/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/cassieyy.github.io/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/cassieyy.github.io/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/cassieyy.github.io/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/cassieyy.github.io/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/cassieyy.github.io/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/cassieyy.github.io/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/cassieyy.github.io/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

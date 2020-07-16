@@ -231,6 +231,146 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cassieyy.github.io/cassieyy.github.io/cassieyy.github.io/2020/07/16/paper2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cassie(Pengyue Lu)知乎@Cassie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/cassieyy.github.io/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hi~ This is Cassie's blog!">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/cassieyy.github.io/2020/07/16/paper2/" itemprop="url">paper2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-16T09:56:58+08:00">
+                2020-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>本篇论文《Deep Cascaded Attention Network for Multi-task Brain Tumor Segmentation》是中科大和其他高校合作的一篇结合attention机制的文章,文章发表在2020MICCAI.</p>
+<ul>
+<li><p>Github地址: 未给出</p>
+</li>
+<li><p>数据集：BraTS challenge 2018</p>
+</li>
+<li><p>解决问题：用cascaded model解决muti-task的问题会造成model redundancy/train complexity/task isolation</p>
+</li>
+<li><p>本文贡献：</p>
+<ul>
+<li>1.将subtask分解为不同的branches(实质上仍为single model),也就是说再一些特征提取时可以共享extractor,从而减少参数降低模型的复杂性;</li>
+<li>2.BraTS challenge是一个分级的分割任务(<a href="https://zhuanlan.zhihu.com/p/159202689" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/159202689</a> 对数据集和此任务的解释可以看我知乎文章),所以作者想到把Cascaded Attention Module(以下简称CAM)加到branch之间;</li>
+<li>3.作者认为backbone——3D-Unet的skip-connection非常低效,又因为原来concat的两个feature存在较大的gap,所以作者用FBM替代原来的skip-connection,既能缓解feature fusion gap(也可以换一种说法是指导特征融合),也能获取层间关系;</li>
+<li>4.作者可视化了CAM以证明该模块的有效性。</li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/cassieyy.github.io/2020/07/16/paper2/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://cassieyy.github.io/cassieyy.github.io/cassieyy.github.io/2020/07/12/paper1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -544,7 +684,7 @@
               
                 <a href="/cassieyy.github.io/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
