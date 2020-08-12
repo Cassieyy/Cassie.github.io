@@ -6,17 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://cassieyy.github.io/cassieyy.github.io">
-  <title>Tag: Paper reading notes in Week1 | Hi~ This is Cassie&#39;s blog!</title>
+  <title>paper6-7 | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Bitter before sweet!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/tags/Paper-reading-notes-in-Week1/index.html">
+  <meta name="description" content="写在前面（今天我们来介绍两篇论文,以CE-Net为主,因为CE-Net用到了PsP-Net中的block,所以我们顺带一起讲一下。semantic seg是逐像素点的分类,所以某种意义上讲semantic seg也可以称为 dense seg） 《CE-Net: Context Encoder Network for 2D Medical Image Segmentation》是一篇将空洞卷积和金">
+<meta property="og:type" content="article">
+<meta property="og:title" content="paper6-7">
+<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:description" content="Bitter before sweet!">
+<meta property="og:description" content="写在前面（今天我们来介绍两篇论文,以CE-Net为主,因为CE-Net用到了PsP-Net中的block,所以我们顺带一起讲一下。semantic seg是逐像素点的分类,所以某种意义上讲semantic seg也可以称为 dense seg） 《CE-Net: Context Encoder Network for 2D Medical Image Segmentation》是一篇将空洞卷积和金">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/1.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/2.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/3.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/4.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/5.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/t1.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/t2.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/6.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/8.png">
+<meta property="article:published_time" content="2020-08-12T09:46:21.000Z">
+<meta property="article:modified_time" content="2020-08-12T12:07:40.397Z">
 <meta property="article:author" content="Cassie">
+<meta property="article:tag" content="paper notes">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hi~ This is Cassie&#39;s blog!" type="application/atom+xml">
   
@@ -156,71 +169,249 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-paper6-7" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/cassieyy.github.io/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/cassieyy.github.io/2020/07/12/paper1/" class="archive-article-date">
-  	<time datetime="2020-07-12T05:30:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/cassieyy.github.io/2020/07/12/paper1/">paper1</a>
+    <h1 class="article-title" itemprop="name">
+      paper6-7
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/cassieyy.github.io/2020/08/12/paper6-7/" class="archive-article-date">
+  	<time datetime="2020-08-12T09:46:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>（今天我们来介绍两篇论文,以CE-Net为主,因为CE-Net用到了PsP-Net中的block,所以我们顺带一起讲一下。semantic seg是逐像素点的分类,所以某种意义上讲semantic seg也可以称为 dense seg）</p>
+<p>《CE-Net: Context Encoder Network for 2D Medical Image Segmentation》是一篇将<strong>空洞卷积</strong>和<strong>金字塔池化</strong>结合,专门用在2D医学图像分割的paper,文章发表在IEEE transcations on medical imaging(TMI2019).</p>
+<p>论文地址：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1903.02740">https://arxiv.org/abs/1903.02740</a></p>
+<p>代码实现(Pytroch)：<a href="https://link.zhihu.com/?target=https%3A//github.com/Guzaiwang/CE-Net">https://github.com/Guzaiwang/CE-Net</a>(官方实现)</p>
+<p>数据集(开源)：Kaggle上肺部、视神经、视网膜(<a href="https://link.zhihu.com/?target=https%3A//drive.grand-challenge.org/DRIVE/">https://drive.grand-challenge.org/DRIVE/</a>)、细胞分割。</p>
+<a id="more"></a>
+
+<h2 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h2><p>Unet连续的卷积和池化操作会丢掉很多空间信息(注意哦 这里分别提到了卷积和池化操作都会丢spatial info 那么下面的解决方法就是针对这两个操作分别进行改进的)</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>作者提出CE-Net,主要的contribution有：</p>
+<p>1.对Unet进行结构上的改进</p>
+<ul>
+<li>提出DAC(Dense Atrous Convolution)block。 利用空洞卷积,通过增大感受野获取更多high-level的info,作者说high-level的信息有助于分割精确度的提升。</li>
+<li>提出RMP(Residual Multi-kernel pooling)block。 与其说是“提出”,不如说直接拿PsP-Net中的block来用了,就是金字塔池化,利用不同kernel-size的池化操作,preserve不同scale的空间信息。</li>
+</ul>
+<p>2.对Unet内部细节进行改进</p>
+<p>encoder所有的特征提取器均采用预训练的ResNet-34(即所有的卷积操作全部变成ResNet部分结构了)替换了U-Net中直接两次卷积操作;decoder采用了bottleneck的设计(即先1<em> 1conv先减少参数 再3</em>3deconv转置卷积操作 最后11conv还原channel )</p>
+<p>3.泛化性</p>
+<p>作者实验部分将CE-Net在非常多的数据集(肺结节分割、视网膜血管分割、细胞分割)上进行训练,各项指标性结果均有有效提升。</p>
+<h2 id="整体网络结构"><a href="#整体网络结构" class="headerlink" title="整体网络结构"></a>整体网络结构</h2><img src="/cassieyy.github.io/2020/08/12/paper6-7/1.png" class>
+
+<p>CE-Net主要由feature encoder + context extractor + feature decoder三个模块组成,比起原始的Unet,本文创新点主要在context extactor这里;</p>
+<p>context extractor(上图中红色虚线框部分)主要由DAC + RMP组成。</p>
+<p>那下面咱们详细看一下这两个主要的block吧～</p>
+<h2 id="DAC-block-to-capture-high-level-semantic-feature-map"><a href="#DAC-block-to-capture-high-level-semantic-feature-map" class="headerlink" title="DAC block(to capture high-level semantic feature map)"></a>DAC block(to capture high-level semantic feature map)</h2><p>还记得我们开始提出的问题吗,这个block就是针对连续的<strong>卷积操作</strong>丢失空间信息问题的。</p>
+<p>下面先来看空洞卷积示意图,其作用就是在参数量不变的情况下增大卷积核的感受野。以下图为例,kernel同样有9个参数,从左到右第一个卷积核的感受野是3,第二个是7,第三个是11。我的理解是感受野越大那么获取的high-level信息越多,越有利于提高分割结果的准确性;而感受野越小的话丢失的细节信息越少,对小目标识别来说更有利。</p>
+<img src="/cassieyy.github.io/2020/08/12/paper6-7/2.png" class>
+
+<p>受到Inception-ResNet-V2和以上空洞卷积的启发,本文中作者提出了以下DAC结构：</p>
+<img src="/cassieyy.github.io/2020/08/12/paper6-7/3.png" class>
+
+<p>简单解释一下Inception,它加宽(widen)了卷积操作,是一个并行结构,用不同size的卷积核分别对同一个feature map进行卷积操作,得到的结果进行concat操作,也可以叫做Multi-scale的操作。</p>
+<p>提到了Inception加宽了卷积操作,同样的也可以加深(deepen)卷积操作,这就是何恺明大神著名的ResNet思想啦,可以使网络结构很深同时保证梯度不爆炸不消失。</p>
+<p>那现在作者将Inception和ResNet思想结合起来,理论上讲可以同时拥有两种结构的优点。</p>
+<h2 id="RMP-block-to-detect-objects-at-different-sizes"><a href="#RMP-block-to-detect-objects-at-different-sizes" class="headerlink" title="RMP block(to detect objects at different sizes)"></a>RMP block(to detect objects at different sizes)</h2><p>这个block<strong>结构上</strong>跟PsP-net是一样的。</p>
+<p>CE-Net的RMP block如下：</p>
+<img src="/cassieyy.github.io/2020/08/12/paper6-7/4.png" class>
+
+<p>PsP-Net的PPM如下：</p>
+<img src="/cassieyy.github.io/2020/08/12/paper6-7/5.png" class>
+
+<p>结构上都是对同一个feature map并行不同尺寸的pooling操作,最后把结果concat起来。这样可以得到不同size的feature map,为了减少训练参数每次pooling后进行一个1*1卷积。</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>作者认为传统的交叉熵损失不适合小目标(即前景/背景很小)的医学图像,所以损失函数选用Diceloss+reg(正则化项用来防止网络过拟合)</p>
+<p>作者分别对视神经、视网膜血管、肺部、细胞进行了分割实验。</p>
+<p>先来看指标性结果：</p>
+<img src="/cassieyy.github.io/2020/08/12/paper6-7/t1.png" class> <img src="/cassieyy.github.io/2020/08/12/paper6-7/t2.png" class>
+
+<p>再看一下视觉效果：</p>
+<img src="/cassieyy.github.io/2020/08/12/paper6-7/6.png" class><img src="/cassieyy.github.io/2020/08/12/paper6-7/8.png" class>
+
+<p>无论是从指标性结果还是视觉效果上看,本文对CE-Net确实有不错的提升,而且是对各个分割任务都有提升。</p>
+<h2 id="关键代码解释-看注释哦～"><a href="#关键代码解释-看注释哦～" class="headerlink" title="关键代码解释(看注释哦～)"></a>关键代码解释(看注释哦～)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br></pre></td><td class="code"><pre><span class="line">class CE_Net_backbone_DAC_with_inception(nn.Module):</span><br><span class="line">    def __init__(self, num_classes&#x3D;1, num_channels&#x3D;3):</span><br><span class="line">        super(CE_Net_backbone_DAC_with_inception, self).__init__()</span><br><span class="line"></span><br><span class="line">        filters &#x3D; [64, 128, 256, 512]</span><br><span class="line">        resnet &#x3D; models.resnet34(pretrained&#x3D;True)</span><br><span class="line">        self.firstconv &#x3D; resnet.conv1 # Conv2d(3, 64, kernel_size&#x3D;(7, 7), stride&#x3D;(2, 2), padding&#x3D;(3, 3), bias&#x3D;False)</span><br><span class="line">        self.firstbn &#x3D; resnet.bn1 </span><br><span class="line">        self.firstrelu &#x3D; resnet.relu</span><br><span class="line">        self.firstmaxpool &#x3D; resnet.maxpool</span><br><span class="line">        self.encoder1 &#x3D; resnet.layer1</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">Sequential(</span><br><span class="line">  (0): BasicBlock(</span><br><span class="line">    (conv1): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">    (bn1): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">    (relu): ReLU(inplace&#x3D;True)</span><br><span class="line">    (conv2): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">    (bn2): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">  )</span><br><span class="line">  (1): BasicBlock(</span><br><span class="line">    (conv1): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">    (bn1): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">    (relu): ReLU(inplace&#x3D;True)</span><br><span class="line">    (conv2): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">    (bn2): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">  )</span><br><span class="line">  (2): BasicBlock(</span><br><span class="line">    (conv1): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">    (bn1): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">    (relu): ReLU(inplace&#x3D;True)</span><br><span class="line">    (conv2): Conv2d(64, 64, kernel_size&#x3D;(3, 3), stride&#x3D;(1, 1), padding&#x3D;(1, 1), bias&#x3D;False)</span><br><span class="line">    (bn2): BatchNorm2d(64, eps&#x3D;1e-05, momentum&#x3D;0.1, affine&#x3D;True, track_running_stats&#x3D;True)</span><br><span class="line">  )</span><br><span class="line">)</span><br><span class="line">&#39;&#39;&#39;</span><br><span class="line">        self.encoder2 &#x3D; resnet.layer2</span><br><span class="line">        self.encoder3 &#x3D; resnet.layer3</span><br><span class="line">        self.encoder4 &#x3D; resnet.layer4</span><br><span class="line"></span><br><span class="line">        self.dblock &#x3D; DACblock_with_inception(512)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        self.decoder4 &#x3D; DecoderBlock(512, filters[2])</span><br><span class="line">        self.decoder3 &#x3D; DecoderBlock(filters[2], filters[1])</span><br><span class="line">        self.decoder2 &#x3D; DecoderBlock(filters[1], filters[0])</span><br><span class="line">        self.decoder1 &#x3D; DecoderBlock(filters[0], filters[0])</span><br><span class="line"></span><br><span class="line">        self.finaldeconv1 &#x3D; nn.ConvTranspose2d(filters[0], 32, 4, 2, 1)</span><br><span class="line">        self.finalrelu1 &#x3D; nonlinearity</span><br><span class="line">        self.finalconv2 &#x3D; nn.Conv2d(32, 32, 3, padding&#x3D;1)</span><br><span class="line">        self.finalrelu2 &#x3D; nonlinearity</span><br><span class="line">        self.finalconv3 &#x3D; nn.Conv2d(32, num_classes, 3, padding&#x3D;1)</span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        # Encoder</span><br><span class="line">        x &#x3D; self.firstconv(x)</span><br><span class="line">        x &#x3D; self.firstbn(x)</span><br><span class="line">        x &#x3D; self.firstrelu(x)</span><br><span class="line">        x &#x3D; self.firstmaxpool(x)</span><br><span class="line">        e1 &#x3D; self.encoder1(x)</span><br><span class="line">        e2 &#x3D; self.encoder2(e1)</span><br><span class="line">        e3 &#x3D; self.encoder3(e2)</span><br><span class="line">        e4 &#x3D; self.encoder4(e3)</span><br><span class="line"></span><br><span class="line">        # Center</span><br><span class="line">        e4 &#x3D; self.dblock(e4)</span><br><span class="line">        # e4 &#x3D; self.spp(e4)</span><br><span class="line"></span><br><span class="line">        # Decoder</span><br><span class="line">        d4 &#x3D; self.decoder4(e4) + e3</span><br><span class="line">        d3 &#x3D; self.decoder3(d4) + e2</span><br><span class="line">        d2 &#x3D; self.decoder2(d3) + e1</span><br><span class="line">        d1 &#x3D; self.decoder1(d2)</span><br><span class="line"></span><br><span class="line">        out &#x3D; self.finaldeconv1(d1)</span><br><span class="line">        out &#x3D; self.finalrelu1(out)</span><br><span class="line">        out &#x3D; self.finalconv2(out)</span><br><span class="line">        out &#x3D; self.finalrelu2(out)</span><br><span class="line">        out &#x3D; self.finalconv3(out)</span><br><span class="line"></span><br><span class="line">        return F.sigmoid(out)</span><br><span class="line"></span><br><span class="line">class CE_Net_backbone_inception_blocks(nn.Module):</span><br><span class="line">    def __init__(self, num_classes&#x3D;1, num_channels&#x3D;3):</span><br><span class="line">        super(CE_Net_backbone_inception_blocks, self).__init__()</span><br><span class="line"></span><br><span class="line">        filters &#x3D; [64, 128, 256, 512]</span><br><span class="line">        resnet &#x3D; models.resnet34(pretrained&#x3D;True)</span><br><span class="line">        self.firstconv &#x3D; resnet.conv1</span><br><span class="line">        self.firstbn &#x3D; resnet.bn1</span><br><span class="line">        self.firstrelu &#x3D; resnet.relu</span><br><span class="line">        self.firstmaxpool &#x3D; resnet.maxpool</span><br><span class="line">        self.encoder1 &#x3D; resnet.layer1</span><br><span class="line">        self.encoder2 &#x3D; resnet.layer2</span><br><span class="line">        self.encoder3 &#x3D; resnet.layer3</span><br><span class="line">        self.encoder4 &#x3D; resnet.layer4</span><br><span class="line"></span><br><span class="line">        self.dblock &#x3D; DACblock_with_inception_blocks(512)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        self.decoder4 &#x3D; DecoderBlock(512, filters[2])</span><br><span class="line">        self.decoder3 &#x3D; DecoderBlock(filters[2], filters[1])</span><br><span class="line">        self.decoder2 &#x3D; DecoderBlock(filters[1], filters[0])</span><br><span class="line">        self.decoder1 &#x3D; DecoderBlock(filters[0], filters[0])</span><br><span class="line"></span><br><span class="line">        self.finaldeconv1 &#x3D; nn.ConvTranspose2d(filters[0], 32, 4, 2, 1)</span><br><span class="line">        self.finalrelu1 &#x3D; nonlinearity</span><br><span class="line">        self.finalconv2 &#x3D; nn.Conv2d(32, 32, 3, padding&#x3D;1)</span><br><span class="line">        self.finalrelu2 &#x3D; nonlinearity</span><br><span class="line">        self.finalconv3 &#x3D; nn.Conv2d(32, num_classes, 3, padding&#x3D;1)</span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        # Encoder</span><br><span class="line">        x &#x3D; self.firstconv(x)</span><br><span class="line">        x &#x3D; self.firstbn(x)</span><br><span class="line">        x &#x3D; self.firstrelu(x)</span><br><span class="line">        x &#x3D; self.firstmaxpool(x)</span><br><span class="line">        e1 &#x3D; self.encoder1(x)</span><br><span class="line">        e2 &#x3D; self.encoder2(e1)</span><br><span class="line">        e3 &#x3D; self.encoder3(e2)</span><br><span class="line">        e4 &#x3D; self.encoder4(e3)</span><br><span class="line"></span><br><span class="line">        # Center</span><br><span class="line">        e4 &#x3D; self.dblock(e4)</span><br><span class="line">        # e4 &#x3D; self.spp(e4)</span><br><span class="line"></span><br><span class="line">        # Decoder</span><br><span class="line">        d4 &#x3D; self.decoder4(e4) + e3</span><br><span class="line">        d3 &#x3D; self.decoder3(d4) + e2</span><br><span class="line">        d2 &#x3D; self.decoder2(d3) + e1</span><br><span class="line">        d1 &#x3D; self.decoder1(d2)</span><br><span class="line"></span><br><span class="line">        out &#x3D; self.finaldeconv1(d1)</span><br><span class="line">        out &#x3D; self.finalrelu1(out)</span><br><span class="line">        out &#x3D; self.finalconv2(out)</span><br><span class="line">        out &#x3D; self.finalrelu2(out)</span><br><span class="line">        out &#x3D; self.finalconv3(out)</span><br><span class="line"></span><br><span class="line">        return F.sigmoid(out)</span><br></pre></td></tr></table></figure>
+
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>1.CE-Net的有效性还有待在自己的数据集上考证(毕竟实验里对这么多医学图像分割任务都有提升未免也太厉害了)</p>
+<p>2.这两block的位置是不是可以放在encode的其他地方。比如在Unet之后有一篇Unet++发表在MICCAI,它就引入了更多的skip connection和上采样,如下图所示。按照这个思路DAC完全可以放在U-net每个doubleconv之后。</p>
+
+
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>未来一周我会在自己的数据集上进行训练测试CE-net看一下其有效性,待补充…</p>
+<h2 id="杂"><a href="#杂" class="headerlink" title="杂"></a>杂</h2><p>在家充电完成啦,回来继续好好学习,保持积极平稳的心态,稳步前进！今天突然想到诗经里的“投我以木桃,报之以琼瑶.匪报也,永以为好也!”写的好美啊。古人可以借诗抒情,今人也可以借知乎文章明志嘛～因为写这个文章会有一些花时间,但今后我会保持一周至少一次论文输出,加油！</p>
+<p>以上,如果有理解不当的地方,欢迎大家批评指正呀!(乐交诤友, 鞠躬感谢！</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Paper reading notes in Week1</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">paper notes</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/cassieyy.github.io/categories/paper-notes//" class="article-tag-list-link color2">paper notes</a>
+        			<a href="/cassieyy.github.io/categories/medical-image-process-semantic-segmentation//" class="article-tag-list-link color5">medical image process, semantic segmentation</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/08/12/paper6-7/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/cassieyy.github.io/2020/07/25/paper5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">paper5</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析问题"><span class="toc-number">2.</span> <span class="toc-text">分析问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">3.</span> <span class="toc-text">解决方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整体网络结构"><span class="toc-number">4.</span> <span class="toc-text">整体网络结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DAC-block-to-capture-high-level-semantic-feature-map"><span class="toc-number">5.</span> <span class="toc-text">DAC block(to capture high-level semantic feature map)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RMP-block-to-detect-objects-at-different-sizes"><span class="toc-number">6.</span> <span class="toc-text">RMP block(to detect objects at different sizes)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验结果"><span class="toc-number">7.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关键代码解释-看注释哦～"><span class="toc-number">8.</span> <span class="toc-text">关键代码解释(看注释哦～)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思考"><span class="toc-number">9.</span> <span class="toc-text">思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">10.</span> <span class="toc-text">后记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#杂"><span class="toc-number">11.</span> <span class="toc-text">杂</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -243,9 +434,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
