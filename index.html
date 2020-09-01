@@ -64,8 +64,8 @@
 			</ul>
 		</nav>
 		<nav>
-			<a>总文章数 8</a>
-			<a>总字数 <span class="post-count">14.9k</span></a>
+			<a>总文章数 9</a>
+			<a>总字数 <span class="post-count">17.9k</span></a>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -170,6 +170,96 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-DataParallel-DistributedDataParallel用于Pytorch分布式训练" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div align="center" class="post-count">
+    字数：3k字 | 预计阅读时长：11分钟
+  </div>
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/">DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练</a>
+    </h1>
+  
+
+        
+        <a href="/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/" class="archive-article-date">
+  	<time datetime="2020-09-01T03:47:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model &#x3D; nn.DataParallel(model)</span><br></pre></td></tr></table></figure>
+
+<p>测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。</p>
+
+
+<p>这里需要注意一下:多卡训练要考虑通信开销的, 是个trade-off的过程,不见得四块卡一定比两块卡快多少,训练到四块卡的时候可能io通信开销已经占了大头。</p>
+        
+          <a class="article-more-a" href="/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/#more">more >></a>
+        
+      
+
+		
+		
+		  <div hidden="hidden"></div>
+		
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/cassieyy.github.io/categories/Pytorch-分布式训练//" class="article-tag-list-link color5">Pytorch, 分布式训练</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-paper9" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div align="center" class="post-count">

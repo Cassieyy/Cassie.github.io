@@ -6,30 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://cassieyy.github.io/cassieyy.github.io">
-  <title>paper3&amp;4 | Hi~ This is Cassie&#39;s blog!</title>
+  <title>DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练 | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面Attention机制最早出现在NLP领域,最近在各个领域用的都很多,今天来详细介绍一下轻量级的SENet(Squeeze and Excitation Networks)和今年CVPR的ECA(Efficient Channel Attention)对SENet进行了改进。 论文链接： SENet：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;1709.01507 ECA：https:&#x2F;&#x2F;">
+  <meta name="description" content="写在前面今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加 1model &#x3D; nn.DataParallel(model)  测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="paper3&amp;4">
-<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/index.html">
+<meta property="og:title" content="DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练">
+<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:description" content="写在前面Attention机制最早出现在NLP领域,最近在各个领域用的都很多,今天来详细介绍一下轻量级的SENet(Squeeze and Excitation Networks)和今年CVPR的ECA(Efficient Channel Attention)对SENet进行了改进。 论文链接： SENet：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;1709.01507 ECA：https:&#x2F;&#x2F;">
+<meta property="og:description" content="写在前面今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加 1model &#x3D; nn.DataParallel(model)  测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/1.png">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/2.png">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/3.png">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/4.png">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/5.png">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/6.png">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/2.2.png">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/2.1.png">
-<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/2.3.png">
-<meta property="article:published_time" content="2020-07-17T12:57:05.000Z">
-<meta property="article:modified_time" content="2020-08-08T07:50:40.329Z">
+<meta property="article:published_time" content="2020-09-01T03:47:31.000Z">
+<meta property="article:modified_time" content="2020-09-01T04:01:45.083Z">
 <meta property="article:author" content="Cassie">
-<meta property="article:tag" content="Attention mechanism">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hi~ This is Cassie&#39;s blog!" type="application/atom+xml">
   
@@ -182,9 +171,9 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-paper3-4" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-DataParallel-DistributedDataParallel用于Pytorch分布式训练" class="article article-type-post " itemscope itemprop="blogPost">
   <div align="center" class="post-count">
-    字数：2.3k字 | 预计阅读时长：8分钟
+    字数：3k字 | 预计阅读时长：11分钟
   </div>
   <div class="article-inner">
     
@@ -192,87 +181,114 @@
         
   
     <h1 class="article-title" itemprop="name">
-      paper3&amp;4
+      DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练
     </h1>
   
 
         
-        <a href="/cassieyy.github.io/2020/07/17/paper3-4/" class="archive-article-date">
-  	<time datetime="2020-07-17T12:57:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-17</time>
+        <a href="/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/" class="archive-article-date">
+  	<time datetime="2020-09-01T03:47:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>Attention机制最早出现在NLP领域,最近在各个领域用的都很多,今天来详细介绍一下轻量级的SENet(Squeeze and Excitation Networks)和今年CVPR的ECA(Efficient Channel Attention)对SENet进行了改进。</p>
-<p>论文链接：</p>
-<p>SENet：<a href="https://arxiv.org/abs/1709.01507" target="_blank" rel="noopener">https://arxiv.org/abs/1709.01507</a></p>
-<p>ECA：<a href="https://arxiv.org/abs/1910.03151" target="_blank" rel="noopener">https://arxiv.org/abs/1910.03151</a></p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model &#x3D; nn.DataParallel(model)</span><br></pre></td></tr></table></figure>
+
+<p>测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。</p>
+
+
+<p>这里需要注意一下:多卡训练要考虑通信开销的, 是个trade-off的过程,不见得四块卡一定比两块卡快多少,训练到四块卡的时候可能io通信开销已经占了大头。</p>
 <a id="more"></a>
 
-<h1 id="一-Squeeze-and-Excitation-Networks-SENet"><a href="#一-Squeeze-and-Excitation-Networks-SENet" class="headerlink" title="一.Squeeze-and-Excitation Networks(SENet)"></a>一.Squeeze-and-Excitation Networks(SENet)</h1><p>Github:<a href="https://github.com/hujie-frank/SENet" target="_blank" rel="noopener">https://github.com/hujie-frank/SENet</a></p>
-<p>SENet是ImageNet 2017(ImageNet收官赛)的冠军模型,和ResNet的出现类似,都在很大程度上减小了之前模型的错误率,并且复杂度低,新增参数和计算量小。作者的motivation在于,目前已经有很多工作在空间维度上来提升网络的性能。那么很自然想到，网络是否可以从其他层面来考虑去提升性能，比如考虑特征通道之间的关系。</p>
-<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><p>CNN靠局部感受野可以同时获取并整合spatial-wise和channel-wise的信息。对于不同的cv任务,我们更希望得到和此任务相关的图像的显著性特点(比如对于边缘检测,我希望图像的纹理信息得到增强),目前已经有很多工作通过learning mechaism获取spatial correlation以增强卷积抽取特征的能力。比如Inception系列的做法就是将multi-scale的思想加到网络中。本文中作者提出channel attention的思想,通过全局信息(加了FC层)重新对channel-wise进行权重的调整,SE block如下图所示。</p>
-<img src="/cassieyy.github.io/2020/07/17/paper3-4/1.png" class>
+<h2 id="nn-DataParallel"><a href="#nn-DataParallel" class="headerlink" title="nn.DataParallel()"></a>nn.DataParallel()</h2><p>(我是单机多卡训练,首先送上官网nn.DataParallel()链接)</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//pytorch.org/docs/stable/generated/torch.nn.DataParallel.html%3Fhighlight%3Dnn%20dataparallel%23torch.nn.DataParallel">https://pytorch.org/docs/stable/generated/torch.nn.DataParallel.html?highlight=nn%20dataparallel#torch.nn.DataParallelpytorch.org</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CLASS torch.nn.DataParallel(module, device_ids&#x3D;None, output_device&#x3D;None, dim&#x3D;0)</span><br></pre></td></tr></table></figure>
 
-<p>这跟Resnet有点像,但做的比residual block还要多,Resnet只是增加了一个skip connection，而SENet在相邻两层之间加入了处理，使得channel之间的信息交互成为可能，进一步提高了网络的准确率。</p>
-<h2 id="2-Squeeze-and-Excitation-blocks"><a href="#2-Squeeze-and-Excitation-blocks" class="headerlink" title="2.Squeeze-and-Excitation blocks"></a>2.Squeeze-and-Excitation blocks</h2><p>给定一个输入 x，其特征通道数为 c_1，通过一系列卷积等一般变换后得到一个特征通道数为 c_2 的特征。与传统的 CNN 不一样的是，接下来我们通过三个操作来重标定前面得到的特征。</p>
-<h4 id="2-1Squeeze-Global-Info-Embedding"><a href="#2-1Squeeze-Global-Info-Embedding" class="headerlink" title="2.1Squeeze:Global Info Embedding"></a>2.1Squeeze:Global Info Embedding</h4><p>首先是 Squeeze 操作，我们顺着空间维度来进行特征压缩，将每个二维的特征通道变成一个实数，这个实数某种程度上具有全局(H*W)的感受野，并且输出的维度和输入的特征通道数相匹配。它表征着在特征通道上响应的全局分布，而且使得靠近输入的层也可以获得全局的感受野，这一点在很多任务中都是非常有用的。</p>
-<p>公式表示：</p>
-<img src="/cassieyy.github.io/2020/07/17/paper3-4/2.png" class>
-
-<p>其实就是一个Global Avg Pooling,如果用pytorch的话,可以通过nn.AdaptiveAvgPool2d(1)实现.这一步骤可以得到C<em> 1</em> 1维度的weight0</p>
-<h4 id="2-2Excitation-Adaptive-Recalibration"><a href="#2-2Excitation-Adaptive-Recalibration" class="headerlink" title="2.2Excitation:Adaptive Recalibration"></a>2.2Excitation:Adaptive Recalibration</h4><p>其次是 Excitation 操作，它是一个类似于循环神经网络中门的机制。通过参数 w 来为每个特征通道生成权重，其中参数 w 被学习用来显式地建模特征通道间的相关性。</p>
-<p>公式表示:</p>
-<img src="/cassieyy.github.io/2020/07/17/paper3-4/3.png" class>
-
-<p>这里用到的是类似bottleneck的设计,先是通过一个全连接层降维到C//r(r是一个自己设定的ratio,文中作者设为了16),在经过一个ReLU获得非线性关系,然后通过第二个全连接层还原到C维,最后是通过一个Sigmoid()将输出限制在(0, 1)之间。这样做比直接用一个 Fully Connected 层的好处在于：</p>
-<p>1）具有更多的非线性，可以更好地拟合通道间复杂的相关性；</p>
-<p>2）极大地减少了参数量和计算量。然后通过一个 Sigmoid 的门获得 0~1 之间归一化的权重，最后通过一个 Scale 的操作来将归一化后的权重加权到每个通道的特征上</p>
-<h4 id="2-3Recalibration"><a href="#2-3Recalibration" class="headerlink" title="2.3Recalibration"></a>2.3Recalibration</h4><p>最后是一个 Reweight 的操作，我们将 Excitation 的输出的权重看做是经过特征选择后的每个特征通道的重要性，然后通过乘法逐通道加权到先前的特征上，完成在通道维度上的对原始特征的重标定。</p>
-<p>公式表示：</p>
-<img src="/cassieyy.github.io/2020/07/17/paper3-4/4.png" class>    
-
-<p>F_scale就是channel-wise的mul。</p>
-<h2 id="3-Generality"><a href="#3-Generality" class="headerlink" title="3.Generality"></a>3.Generality</h2><p>除此之外，SE 模块还可以嵌入到含有 skip-connections 的模块中。下图分别是将 SE 嵌入到 Inception和ResNet 模块中的例子，在ResNet的操作过程基本和 SE-Inception 一样，只不过是在 Addition 前对分支上 Residual 的特征进行了特征重标定。如果对 Addition 后主支上的特征进行重标定，由于在主干上存在 0~1 的 scale 操作，在网络较深 BP 优化时就会在靠近输入层容易出现梯度消散的情况，导致模型难以优化。</p>
-<img src="/cassieyy.github.io/2020/07/17/paper3-4/5.png" class>
-
-<p>目前大多数的主流网络都是基于这两种类似的单元通过 repeat 方式叠加来构造的。由此可见，SE 模块可以嵌入到现在几乎所有的网络结构中。通过在原始网络结构的 building block 单元中嵌入 SE 模块，我们可以获得不同种类的 SENet。如 SE-BN-Inception、SE-ResNet、SE-ReNeXt、SE-Inception-ResNet-v2 等等，证明SE有很好的泛化性。</p>
-<h2 id="4-Experiment"><a href="#4-Experiment" class="headerlink" title="4.Experiment"></a>4.Experiment</h2><p>以下是SEblock在ImageNet上的表现。</p>
-<img src="/cassieyy.github.io/2020/07/17/paper3-4/6.png" class>
-
-<p>首先我们来看一下网络的深度对 SE 的影响。上表分别展示了 ResNet-50、ResNet-101、ResNet-152 和嵌入 SE 模型的结果。第一栏 Original 是原作者实现的结果，为了进行公平的比较，我们在 ROCS 上重新进行了实验得到 Our re-implementation 的结果（ps. 我们重实现的精度往往比原 paper 中要高一些）。最后一栏 SE-module 是指嵌入了 SE 模块的结果，它的训练参数和第二栏 Our re-implementation 一致。括号中的红色数值是指相对于 Our re-implementation 的精度提升的幅值。</p>
-<p>从上表可以看出，SE-ResNets 在各种深度上都远远超过了其对应的没有 SE 的结构版本的精度，这说明无论网络的深度如何，SE 模块都能够给网络带来性能上的增益。值得一提的是，SE-ResNet-50 可以达到和 ResNet-101 一样的精度；更甚，SE-ResNet-101 远远地超过了更深的 ResNet-152。</p>
-<h2 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5. Conclusion"></a>5. Conclusion</h2><ul>
-<li><p>是否每个Conv之后都用SE效果会好？应该是没有必要每个都用的,别忘了SE中含有两个FC,这会带来大量的参数引入。(还有关于这些block的位置问题,师兄说block的位置比较随便的,可能加到前面会稍微好一些);</p>
-</li>
-<li><p>SENet的核心思想在于通过网络根据loss去学习特征权重，使得有效的feature map权重大，无效或效果小的feature map权重小的方式训练模型达到更好的结果,是一个channel-attention的思想.</p>
-</li>
+<ul>
+<li><strong>参数定义</strong></li>
 </ul>
-<h1 id="二-ECA-Net-Efficient-Channel-Attention-for-Deep-CNN"><a href="#二-ECA-Net-Efficient-Channel-Attention-for-Deep-CNN" class="headerlink" title="二.ECA-Net:Efficient Channel Attention for Deep CNN"></a>二.ECA-Net:Efficient Channel Attention for Deep CNN</h1><p>SENet是发表在2017年的,ECA是今年CVPR的一篇,主要是对SE进行了一些改进,下面我们一起来看一下。</p>
-<h2 id="1-Introducion"><a href="#1-Introducion" class="headerlink" title="1.Introducion"></a>1.Introducion</h2><p>作者的motivation是“Can one learn effective channel attention in a more efficient way?“首先先来跟上面讲过的SENet进行一些对比,ECA作者认为1.SE在获取channel attention的模型还是太复杂了2.两个FC之间不应该用reduction ratio(这样的做法会影响channel attention prediction的准确性并且是unnecessary和inefficient的，目前所有的Spatial attention和Channel attention都存在模型复杂、计算量大的缺点)。</p>
-<h2 id="2-Method"><a href="#2-Method" class="headerlink" title="2.Method"></a>2.Method</h2><h4 id="2-1-Avoiding-Dimensionality-Reduction"><a href="#2-1-Avoiding-Dimensionality-Reduction" class="headerlink" title="2.1 Avoiding Dimensionality Reduction"></a>2.1 Avoiding Dimensionality Reduction</h4><p>首先来看作者的对比实验：</p>
-<img src="/cassieyy.github.io/2020/07/17/paper3-4/2.2.png" class>
-
-<p>SE(GAP-FC(reduction)-ReLU-FC-Sigmoid)</p>
-<p>SE-Var1(0参数的SE  GAP-Sigmoid)</p>
-<p>SE-Var2(GAP-点乘-sigmoid)</p>
-<p>SE-Var3(GAP-FC-sigmoid)</p>
-<p>为了验证它的效果，作者比较了原始SE块和它的三个变体(即SE-Var1, SE-Var2和SEVar3)，所有这些都不执行维数降低(avoid dimensionality reduction)。从上表可以看出，无参数的SE-Var1仍然优于原始网络(Vanilla)，说明channel attention具有提高深度CNNs性能的能力。同时SE- var2独立学习各通道的权值，在参数较少的情况下略优于SE-Var1,这说明channel与其权值需要直接对应，而avoid降维比考虑非线性channel相关性更重要。</p>
-<h4 id="2-2-Local-Cross-Channel-Interaction"><a href="#2-2-Local-Cross-Channel-Interaction" class="headerlink" title="2.2 Local Cross-Channel Interaction"></a>2.2 Local Cross-Channel Interaction</h4><img src="/cassieyy.github.io/2020/07/17/paper3-4/2.1.png" class>
-
-<p>作者首先通过GroupConv实现即表中的SE-GC,组卷积可以学习到local cross-channel的特征,这一点下图可以很容易地看出来。</p>
-<img src="/cassieyy.github.io/2020/07/17/paper3-4/2.3.png" class>
-
-<p>每个神经元只连接输入的C_in//Group个channel的特征(这样做参数量是标准卷积的1/group),但实验发现这样的操作并没有带来效果的提升,作者分析原因可能是SE-GC丢弃了Group间的联系,只有Group间的cross-channel interactions了。</p>
-<p>为了解决这个问题,作者用了含k个参数的Conv1d。为了更高效,作者使所有的channel共享这k个参数(ECA是在SE-Var2的基础上改的)。</p>
-<h2 id="3-Conclusion-amp-Contributions"><a href="#3-Conclusion-amp-Contributions" class="headerlink" title="3.Conclusion&amp;Contributions"></a>3.Conclusion&amp;Contributions</h2><ul>
-<li>仔细分析了SEblock,避免dimension reduction对于effective CA(channel attention)是非常重要的;</li>
-<li>适当的cross-channel interaction对于efficientCA是非常重要的;</li>
-<li>提出ECA模块在增加可以忽略不计的参数量的同时带来明显性能的提升;</li>
-<li>在ImageNet和COCO数据集上进行实验,比SOTA模型的复杂度低但是获得了competitive的表现。</li>
+<p><strong>module</strong>是要放到多卡训练的模型;</p>
+<p><strong>device_ids</strong>数据类型是一个列表, 表示可用的gpu卡号;</p>
+<p><strong>output_devices</strong>数据类型也是列表,表示模型输出结果存放的卡号(如果不指定的话,默认放在0卡,这也是为什么多gpu训练并不是负载均衡的,一般0卡会占用的多,这里还涉及到一个小知识点——如果程序开始加os.environ[“CUDA_VISIBLE_DEVICES”] = “2, 3”, 那么0卡(逻辑卡号)指的是2卡(物理卡号))。</p>
+<ul>
+<li><strong>如何多卡加速训练</strong></li>
 </ul>
+<p>讲原理：</p>
+<p>网络在<strong>前向传播</strong>的时候会将model从主卡(默认是逻辑0卡)复制一份到所有的device上,input_data会在batch这个维度被分组后upload到不同的device上计算。在<strong>反向传播</strong>时，每个卡上的梯度会汇总到主卡上,求得梯度的均值后,再用反向传播更新单个GPU上的模型参数，最后将更新后的模型参数复制到剩余指定的GPU中进行下一轮的前向传播,以此来实现并行。有多少个gpu参与计算就有多少个gradient求平均,关于gradient求平均是否合理以及如何改进可以参考：</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//github.com/pytorch/pytorch/pull/7973/commits/c285b3626a7a4dcbbddfba1a6b217a64a3f3f3be">https://github.com/pytorch/pytorch/pull/7973/commits/c285b3626a7a4dcbbddfba1a6b217a64a3f3f3begithub.com</a></p>
+<p>除了model和data,其他数据的分配规则如下:允许将Arbitrary positional和keyword添加到所有gpu上并行计算, 但有些数据类型是专门处理的。tensor将分配到指定的卡上,默认为0(这个地方我可能理解的不对,原话是“tensors will be scatteredon dim specified (default 0)”如果有人有其他正确的理解,望不吝赐教)。对元组、列表和字典类型的数据浅拷贝后复制到其他卡上。</p>
+<p>举例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">os.environ[&#39;CUDA_VISIBLE_DEVICES&#39;]&#x3D;&#39;1, 2&#39; # 指定逻辑卡号。比如这样写的话,第0块卡指的是物理上的第2块</span><br><span class="line"></span><br><span class="line">device &#x3D; torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)</span><br><span class="line">input &#x3D; torch.randn(8, 4, 160, 160).to(device) # 将数据放到gpu上</span><br><span class="line">model &#x3D; nn.Conv2d(4, 3, kernel_size &#x3D; 3, stride &#x3D; 1, padding &#x3D; 1)</span><br><span class="line">model &#x3D; model.to(device)# 将模型放到gpu上</span><br><span class="line">output &#x3D; model(input) </span><br><span class="line">model &#x3D; torch.nn.DataParallel(model, device_ids&#x3D;[0, 1])</span><br></pre></td></tr></table></figure>
+
+<p>——————————————————这是分割线——————————————————</p>
+<p>如果写到这就戛然而止,就和CSDN上那些小笔记的就没什么区别了…当时用多卡训练,我选择nn.DataParallel(model)纯属因为它简单,只要两三行代码就能实现,今天再看官网,人家白底黑字写着<strong>warning</strong>和<strong>recommended:</strong></p>
+
+
+<p>关于nn.DataParallel(以下简称DP)和DistributedDataParallel(以下简称DDP)的区别：</p>
+<ul>
+<li>DDP通过<strong>多进程</strong>实现的。也就是说操作系统会为每个GPU创建一个进程,从而避免了Python解释器GIL带来的性能开销。而DataParallel()是通过<strong>单进程控制多线程</strong>来实现的。还有一点,DDP也不存在前面DP提到的负载不均衡问题。</li>
+<li>参数更新的方式不同。DDP在各进程梯度计算完成之后,各进程需要将梯度进行汇总平均,然后再由 <code>rank=0</code> 的进程,将其 <code>broadcast</code> 到所有进程后,各进程用该梯度来独立的更新参数而 DP是梯度汇总到GPU0,反向传播更新参数,再广播参数给其他剩余的GPU。由于DDP各进程中的模型,初始参数一致 (初始时刻进行一次 broadcast),而每次用于更新参数的梯度也一致,因此,各进程的模型参数始终保持一致。而在DP中,全程维护一个 optimizer,对各个GPU上梯度进行求平均,而在主卡进行参数更新,之后再将模型参数 broadcast 到其他GPU.相较于DP, DDP传输的数据量更少,因此速度更快,效率更高。</li>
+<li>DDP支持 all-reduce(指汇总不同 GPU 计算所得的梯度,并同步计算结果),broadcast,send 和 receive 等等。通过 MPI 实现 CPU 通信,通过 NCCL 实现 GPU 通信,缓解了“写在前面“提到的进程间通信有大的开销问题。</li>
+</ul>
+<p>唯一不好的地方是DDP相对后者来说,使用起来会有些麻烦(不然当时我也不会两三行就能实现的DP了),下面我们一起借助官网教程,看看它具体怎么用的吧～</p>
+<h2 id="recommended-to-use-DistributedDataParallel-既可单机多卡又可多机多卡"><a href="#recommended-to-use-DistributedDataParallel-既可单机多卡又可多机多卡" class="headerlink" title="(recommended to use)DistributedDataParallel (既可单机多卡又可多机多卡)"></a><strong>(recommended to use)<code>DistributedDataParallel</code> (既可单机多卡又可多机多卡)</strong></h2><p>先奉上官网nn.DistributedDataParallel(model)链接</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html%23torch.nn.parallel.DistributedDataParallel">https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html#torch.nn.parallel.DistributedDataParallelpytorch.org</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CLASS torch.nn.parallel.DistributedDataParallel(module, device_ids&#x3D;None, output_device&#x3D;None, </span><br><span class="line">dim&#x3D;0, broadcast_buffers&#x3D;True, process_group&#x3D;None, bucket_cap_mb&#x3D;25, </span><br><span class="line">find_unused_parameters&#x3D;False, check_reduction&#x3D;False)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数定义</li>
+</ul>
+<p><strong>module</strong>是要放到多卡训练的模型;</p>
+<p><strong>device_ids</strong>数据类型是一个列表, 表示可用的gpu卡号;</p>
+<p><strong>output_devices</strong>数据类型也是列表,表示模型输出结果存放的卡号(如果不指定的话,默认放在0卡,这也是为什么多gpu训练并不是负载均衡的,一般0卡会占用的多,这里还涉及到一个小知识点——如果程序开始加os.environ[“CUDA_VISIBLE_DEVICES”] = “2, 3”, 那么0卡(逻辑卡号)指的是2卡(物理卡号))。</p>
+<p><strong>dim</strong>指按哪个维度进行数据的划分,默认是输入数据的第一个维度,即按batchsize划分(设数据数据的格式是B, C, H, W)</p>
+<p>其他参数可以康康官网的解释(我没太看懂,就用默认的好了)</p>
+<ul>
+<li>分布式的几个概念</li>
+</ul>
+<p>1.<strong>group:</strong>即进程组。默认情况下，只有一个组，一个 job 即为一个组，也即一个 world。 当需要进行更加精细的通信时，可以通过 new_group 接口，使用 word 的子集，创建新组，用于集体通信等;</p>
+<p>2.<strong>world size:</strong>表示全局进程个数;</p>
+<p>3.<strong>rank:</strong>表示进程序号，用于进程间通讯，表征进程优先级。rank = 0 的GPU为主卡;</p>
+<p>4.<strong>local_rank:</strong>进程内，GPU 编号，非显式参数，由 torch.distributed.launch 内部指定。比方说， rank = 3，local_rank = 0 表示第 3 个进程内的第 1 块 GPU.</p>
+<ul>
+<li><strong>如何多卡加速训练</strong></li>
+</ul>
+<p><strong>讲原理：</strong></p>
+<p>DDP在各进程梯度计算完成之,各进程需要将梯度进行汇总平均,然后再由 rank=0 的进程,将其 broadcast 到所有进程后,各进程用该梯度来独立的更新参数而 DP是梯度汇总到GPU0,反向传播更新参数,再广播参数给其他剩余的GPU。由于DDP各进程中的模型,初始参数一致 (初始时刻进行一次 broadcast),而每次用于更新参数的梯度也一致,因此,各进程的模型参数始终保持一致。而在DP中,全程维护一个 optimizer,对各个GPU上梯度进行求,而在主卡进行参数更新,之后再将模型参数 broadcast 到其他GPU.相较于DP, DDP传输的数据量更少,因此速度更快,效率更高。</p>
+<p><strong>举例子(踩坑无数后,亲测成功!!)：</strong></p>
+<p><strong>先介绍各个过程,最后总结代码段</strong></p>
+<p>1.<code>init_process_group</code>初始化进程组(如果需要进行前面提到的小组内集体通信,用<code>new_group</code>创建子分组);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 初始化使用nccl后端,官网还提供了‘gloo’作为backend,俺觉得知道nccl是用来GPU之间进行通信的就可以</span><br><span class="line">torch.distributed.init_process_group(backend&#x3D;&quot;nccl&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>2.使用DistributedSampler(改dataloader中<code>sampler=train_sampler</code>)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># train_dataset就是自己的数据集</span><br><span class="line">train_sampler &#x3D; torch.utils.data.distributed.DistributedSampler(train_dataset)</span><br><span class="line">dataloader &#x3D; DataLoader(dataset, batch_size&#x3D;batch_size, shuffle &#x3D; (train_sampler is None), sampler&#x3D;train_sampler, pin_memory&#x3D;False)</span><br></pre></td></tr></table></figure>
+
+<p>ps.据说<code>pin_memory</code>设为True会加速训练(但官网给到但参数设置是False)。</p>
+<p>3.创建DDP模型进行分布式训练</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># DDP是all-reduce的,即汇总不同 GPU 计算所得的梯度,并同步计算结果.all reduce 后不同 GPU 中模型的梯度均为 all reduce 之前各 GPU 梯度的均值.</span><br><span class="line">model &#x3D; torch.nn.parallel.DistributedDataParallel(model, device_ids&#x3D;[args.local_rank], output_device&#x3D;args.local_rank, find_unused_parameters&#x3D;True)</span><br></pre></td></tr></table></figure>
+
+<p>4.最后一步,执行python train.py时需加参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m torch.distributed.launch --nnodes&#x3D;1 --nproc_per_node&#x3D;2 --node_rank&#x3D;0  --master_port&#x3D;6005 train.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="代码段总结"><a href="#代码段总结" class="headerlink" title="代码段总结"></a>代码段总结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">###DDP</span><br><span class="line"></span><br><span class="line"># 引入包</span><br><span class="line">import argparse</span><br><span class="line">import torch.distributed as dist</span><br><span class="line"></span><br><span class="line"># 设置可选参数</span><br><span class="line">parser &#x3D; argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(&#39;--local_rank&#39;, default&#x3D;0, type&#x3D;int,</span><br><span class="line">                    help&#x3D;&#39;node rank for distributed training&#39;)</span><br><span class="line">args &#x3D; parser.parse_args()</span><br><span class="line"># print(args.local_rank)</span><br><span class="line">dist.init_process_group(backend&#x3D;&#39;nccl&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 1.上面讲到的初始化进程组</span><br><span class="line">dist.init_process_group(backend&#x3D;&#39;nccl&#39;)</span><br><span class="line">torch.cuda.set_device(args.local_rank)</span><br><span class="line"></span><br><span class="line"># 2.使用DistributedSampler</span><br><span class="line">dataloader &#x3D; DataLoader(dataset, batch_size&#x3D;batch_size, shuffle &#x3D; (train_sampler is None), sampler&#x3D;train_sampler, pin_memory&#x3D;False)</span><br><span class="line"></span><br><span class="line"># 3.创建DDP模型进行分布式训练</span><br><span class="line">model &#x3D; nn.parallel.DistributedDataParallel(model, device_ids&#x3D;[args.local_rank], output_device&#x3D;args.local_rank, find_unused_parameters&#x3D;True)</span><br><span class="line"></span><br><span class="line"># 4.命令行开始训练 --nproc_per_node参数指定为当前主机创建的进程数(比如我当前可用但卡数是2 那就为这个主机创建两个进程,每个进程独立执行训练脚本)</span><br><span class="line"># 我是单机多卡, 所以nnode&#x3D;1, 就是一台主机, 一台主机上--nproc_per_node个进程</span><br><span class="line">python -m torch.distributed.launch --nnodes&#x3D;1 --nproc_per_node&#x3D;2 --node_rank&#x3D;0  --master_port&#x3D;6005 train.py</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h2><p>关于程序执行的命令行,我被困扰最久的一个点在<code>args</code>这个可变参数上,凭借着我对<code>args</code>贫瘠的认知, 不知道该把起始时我们定义的<code>local_rank</code>设置成多少。这里要记录一下,pytorch 为我们提供了 <code>torch.distributed.launch</code> 启动器,用于在命令行分布式地执行 python 文件,所以我们只要给它留出这个位置来就可以,其他的这个启动器会帮我们搞定。也就是说在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.cuda.set_device(args.local_rank)</span><br><span class="line">model &#x3D; nn.parallel.DistributedDataParallel(model, device_ids&#x3D;[args.local_rank], output_device&#x3D;args.local_rank, find_unused_parameters&#x3D;True)</span><br></pre></td></tr></table></figure>
+
+<p>这些代码段中(涉及到args.local_rank的地方)都是不需要改动的,我之前一直致力于改这些点,调试花费了很长时间。</p>
+
+
+<p><strong>还要注意</strong>：在<strong>DataParallel</strong>中,batch_size设置必须为单卡的n倍, 但是在<strong>DistributedDataParallel</strong>内,batch_size设置于单卡一样即可(不然就要OOM啦) .</p>
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>文章写到这里好像也并没有解决我最开始抛出的问题,但在解决问题但过程中蹭蹭蹭涨了好多知识,我怀疑问题出现的原因是我训练是在两块卡上,但是测试的时候是一块卡,这个我再试试。另外分布式训练还涉及了好多好多知识点,同学今天在研究apex,这是Nividia提供的分布式方法,好像要比DP和DDP还要快,不仅如此<code>apex</code>还能进行四种精度的训练(DDP只能双精度混合训练,float16和float32),在看文档的时候还涉及了<code>hook</code>(又是我的知识盲区)。</p>
+<p>以及下面加载模型的函数,需要研究一下<code>strict</code>这个参数,有时候不加会报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def load_model_checkpoints(model,checkpoint_path&#x3D;&#39;.&#x2F;checkpoints&#x2F;newSeUnet&#x2F;latest.pth&#39;):</span><br><span class="line">    # model &#x3D; nn.DataParallel(model)</span><br><span class="line">    state_dict &#x3D; torch.load(checkpoint_path)</span><br><span class="line">    model.load_state_dict(s</span><br></pre></td></tr></table></figure>
+
+<p>两个程序都用DDP跑起来啦超开心！今天先讲到这啦～</p>
 
       
 
@@ -286,24 +302,13 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Attention mechanism</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/cassieyy.github.io/categories/paper-notes//" class="article-tag-list-link color2">paper notes</a>
+        			<a href="/cassieyy.github.io/categories/Pytorch-分布式训练//" class="article-tag-list-link color5">Pytorch, 分布式训练</a>
         		</li>
       		
 		</ul>
@@ -358,7 +363,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/07/17/paper3-4/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -372,18 +377,9 @@
   
 <nav id="article-nav">
   
-    <a href="/cassieyy.github.io/2020/07/25/paper5/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          paper5
-        
-      </div>
-    </a>
   
-  
-    <a href="/cassieyy.github.io/2020/07/16/paper2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">paper2</div>
+    <a href="/cassieyy.github.io/2020/08/24/paper9/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">paper9</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -410,7 +406,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一-Squeeze-and-Excitation-Networks-SENet"><span class="toc-number">2.</span> <span class="toc-text">一.Squeeze-and-Excitation Networks(SENet)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.1.</span> <span class="toc-text">1.Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Squeeze-and-Excitation-blocks"><span class="toc-number">2.2.</span> <span class="toc-text">2.Squeeze-and-Excitation blocks</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1Squeeze-Global-Info-Embedding"><span class="toc-number">2.2.0.1.</span> <span class="toc-text">2.1Squeeze:Global Info Embedding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2Excitation-Adaptive-Recalibration"><span class="toc-number">2.2.0.2.</span> <span class="toc-text">2.2Excitation:Adaptive Recalibration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3Recalibration"><span class="toc-number">2.2.0.3.</span> <span class="toc-text">2.3Recalibration</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Generality"><span class="toc-number">2.3.</span> <span class="toc-text">3.Generality</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Experiment"><span class="toc-number">2.4.</span> <span class="toc-text">4.Experiment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Conclusion"><span class="toc-number">2.5.</span> <span class="toc-text">5. Conclusion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二-ECA-Net-Efficient-Channel-Attention-for-Deep-CNN"><span class="toc-number">3.</span> <span class="toc-text">二.ECA-Net:Efficient Channel Attention for Deep CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introducion"><span class="toc-number">3.1.</span> <span class="toc-text">1.Introducion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Method"><span class="toc-number">3.2.</span> <span class="toc-text">2.Method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Avoiding-Dimensionality-Reduction"><span class="toc-number">3.2.0.1.</span> <span class="toc-text">2.1 Avoiding Dimensionality Reduction</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Local-Cross-Channel-Interaction"><span class="toc-number">3.2.0.2.</span> <span class="toc-text">2.2 Local Cross-Channel Interaction</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Conclusion-amp-Contributions"><span class="toc-number">3.3.</span> <span class="toc-text">3.Conclusion&amp;Contributions</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nn-DataParallel"><span class="toc-number">2.</span> <span class="toc-text">nn.DataParallel()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#recommended-to-use-DistributedDataParallel-既可单机多卡又可多机多卡"><span class="toc-number">3.</span> <span class="toc-text">(recommended to use)DistributedDataParallel (既可单机多卡又可多机多卡)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码段总结"><span class="toc-number">4.</span> <span class="toc-text">代码段总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#踩坑记录"><span class="toc-number">5.</span> <span class="toc-text">踩坑记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">6.</span> <span class="toc-text">写在后面</span></a></li></ol>
                     </div>
                 </span>
             </div>
