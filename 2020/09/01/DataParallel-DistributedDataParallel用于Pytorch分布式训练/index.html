@@ -16,8 +16,9 @@
 <meta property="og:description" content="写在前面今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加 1model &#x3D; nn.DataParallel(model)  测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-01T03:47:31.000Z">
-<meta property="article:modified_time" content="2020-09-01T04:01:45.083Z">
+<meta property="article:modified_time" content="2020-09-02T02:44:37.511Z">
 <meta property="article:author" content="Cassie">
+<meta property="article:tag" content="Pytorch, 分布式训练">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hi~ This is Cassie&#39;s blog!" type="application/atom+xml">
@@ -66,8 +67,8 @@
 			</ul>
 		</nav>
 		<nav>
-			<a>总文章数 9</a>
-			<a>总字数 <span class="post-count">17.9k</span></a>
+			<a>总文章数 10</a>
+			<a>总字数 <span class="post-count">19.9k</span></a>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -302,13 +303,24 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Pytorch, 分布式训练</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/cassieyy.github.io/categories/Pytorch-分布式训练//" class="article-tag-list-link color5">Pytorch, 分布式训练</a>
+        			<a href="/cassieyy.github.io/categories/skills//" class="article-tag-list-link color2">skills</a>
         		</li>
       		
 		</ul>
@@ -376,6 +388,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/cassieyy.github.io/2020/09/02/Git%E4%BA%A7%E5%87%BA%E5%BC%8F%E5%AD%A6%E4%B9%A0-%E4%B8%80/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Git产出式学习(一)
+        
+      </div>
+    </a>
   
   
     <a href="/cassieyy.github.io/2020/08/24/paper9/" id="article-nav-older" class="article-nav-link-wrap">
@@ -561,6 +582,14 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">ASPP, Multi-scale</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Git GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Pytorch, 分布式训练</a>
               </li>
             
             <div class="clearfix"></div>
