@@ -6,17 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://cassieyy.github.io/cassieyy.github.io">
-  <title>Archives: 2020/8 | Hi~ This is Cassie&#39;s blog!</title>
+  <title>分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv) | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Bitter before sweet!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/archives/2020/08/index.html">
+  <meta name="description" content="写在前面今天有一个小小的idea,需要用到分组卷积,于是我翻开了notebook,发现之前对两种卷积的分析都太简单了,这次再复习竟不知道啥是啥,于是痛定思痛,决定以后把经典的东西,都仔仔细细地写在这里,供大家批评,鞭策自己进步！ 请注意题目顺序先分组卷积再深度可分离卷积,后面就知道为什么一定要按这样的顺序了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv)">
+<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:description" content="Bitter before sweet!">
+<meta property="og:description" content="写在前面今天有一个小小的idea,需要用到分组卷积,于是我翻开了notebook,发现之前对两种卷积的分析都太简单了,这次再复习竟不知道啥是啥,于是痛定思痛,决定以后把经典的东西,都仔仔细细地写在这里,供大家批评,鞭策自己进步！ 请注意题目顺序先分组卷积再深度可分离卷积,后面就知道为什么一定要按这样的顺序了。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-741e4b53627670c8c470dd8df1d93d6a_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-52219e882f901306014eeae0eb93fea4_b.png">
+<meta property="article:published_time" content="2020-09-09T01:44:10.000Z">
+<meta property="article:modified_time" content="2020-09-09T01:48:52.943Z">
 <meta property="article:author" content="Cassie">
+<meta property="article:tag" content="Group conv">
+<meta property="article:tag" content="Separable conv">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/v2-741e4b53627670c8c470dd8df1d93d6a_b.png">
   
     <link rel="alternative" href="/atom.xml" title="Hi~ This is Cassie&#39;s blog!" type="application/atom+xml">
   
@@ -169,169 +176,238 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-分组卷积-Group-conv-与深度可分离卷积-Depthwise-separable-conv" class="article article-type-post " itemscope itemprop="blogPost">
+  <div align="center" class="post-count">
+    字数：1.5k字 | 预计阅读时长：5分钟
+  </div>
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv)
+    </h1>
+  
+
+        
+        <a href="/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/" class="archive-article-date">
+  	<time datetime="2020-09-09T01:44:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-09</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>今天有一个小小的idea,需要用到分组卷积,于是我翻开了notebook,发现之前对两种卷积的分析都太简单了,这次再复习竟不知道啥是啥,于是痛定思痛,决定以后把经典的东西,都仔仔细细地写在这里,供大家批评,鞭策自己进步！</p>
+<p>请注意题目顺序<strong>先</strong>分组卷积<strong>再</strong>深度可分离卷积,后面就知道为什么一定要按这样的顺序了。</p>
+<a id="more"></a>
+
+<h2 id="一-分组卷积-Group-conv"><a href="#一-分组卷积-Group-conv" class="headerlink" title="[一]分组卷积(Group conv)"></a>[一]分组卷积(Group conv)</h2><ul>
+<li>论文地址：<a href="https://arxiv.org/pdf/1605.06489.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1605.06489.pdf</a></li>
+<li>解释</li>
+</ul>
+<p>​      分组卷积,即ResNeXt,是受到Inception和AlexNet的启发。Iception 的论文中提到,对于卷积来说,卷积核可以看做一个<strong>三维的滤波器</strong>:通道维+空间维(Feature Map 的宽和高),常规的卷积操作其实就是实现<strong>通道相关性</strong>和<strong>空间相关性</strong>的<strong>联合映射</strong>。Inception 模块的背后存在这样的一种假设:卷积层通道间的相关性和空间相关性是可以<strong>退耦合</strong>的,将它们分开映射,能达到更好的效果.具体来说,经过不同卷积路径得到的特征图之间的耦合性较低,关注的主要特征不同,可以得到互为补充的特征图,以更完整的表示图像.</p>
+<p>以下就是论文中提到的分组卷积可视化图：</p>
+<p><img src="https://pic3.zhimg.com/v2-741e4b53627670c8c470dd8df1d93d6a_b.png" alt="img"></p>
+<p>(a)为常规卷积(b)为分组卷积</p>
+<p>(a)是常规卷积(b)是分组卷积,得到多个互补的特征,然后将得到的特征进行concat组合,作为最终的输出特征图。 </p>
+<ul>
+<li>举例</li>
+</ul>
+<blockquote>
+<p> 举个例子比较参数量：假设input.shape = [c1, H, W] output.shape = [c2, H, W]                                                                            (a)常规卷积参数量=<strong>kernel_size * kernel_size * c1 * c2</strong>                                                                                                               (b)分组卷积参数量=kernel_size <em> kernel_size </em> (c1/g) <em> (c2/g) </em> g = (<strong>kernel_size * kernel_size * c1 * c2</strong>)/g其中g为分组数量                     </p>
+</blockquote>
+<p>上面的例子我们可以清楚地看到,得到相同的output.shape,分组卷积的参数量是常规卷积的1/g,其中g是分组的个数(上图中是两个)。 </p>
+<ul>
+<li>分析</li>
+</ul>
+<p>官方分析：Alex认为group conv的方式能够增加 filter之间的对角相关性,而且能够减少训练参数,不容易过拟合,这类似于正则的效果。</p>
+<ul>
+<li>代码实现(pytorch提供了相关参数,以2d为例)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">...</span><br><span class="line">model &#x3D; nn.Conv2d(in_channels &#x3D; in_channel, out_channels &#x3D; out_channel, </span><br><span class="line">kernel_size &#x3D; kernel_size, stride &#x3D; stride, padding &#x3D; 1, dilation &#x3D; dilation, group &#x3D; group_num)</span><br></pre></td></tr></table></figure>
+
+<p>这里要注意,group_num要能被in_channels和out_channels整除才行,否则会报错</p>
+<h2 id="二-深度可分离卷积"><a href="#二-深度可分离卷积" class="headerlink" title="[二]深度可分离卷积"></a>[二]深度可分离卷积</h2><ul>
+<li>论文地址：<a href="https://arxiv.org/pdf/1704.04861.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1704.04861.pdf</a></li>
+<li>解释</li>
+</ul>
+<p>深度可分离卷积是MobileNet的精髓,它由deep_wise卷积和point_wise卷积两部分组成。我以前一直觉得深度可分离卷积是极端化的分组卷积(把group数量设为Cin个就行)。但今天再次思考一下,发现他们很大的不同在于,<strong>分组卷积</strong>只进行<strong>一次卷积</strong>(一个nn.Conv2d即可实现),不同group的卷积结果concat即可,而<strong>深度可分离卷积</strong>是进行了<strong>两次卷积</strong>操作,第一次先进deep_wise卷积(即收集每一层的特征),kernel_size = K<em>K</em>1,第一次卷积总的参数量为K<em>K</em>Cin,第二次是为了得到Cout维度的输出,kernel_size = 1<em>1</em>Cin,第二次卷积总的参数量为1<em>1</em>Cin*Cout。第二次卷积输出即为深度可分离卷积的输出。</p>
+<p>以下就是论文中提到的深度可分离卷积可视化图：</p>
+<p><img src="https://pic1.zhimg.com/v2-52219e882f901306014eeae0eb93fea4_b.png" alt="img"></p>
+<p>(a)是常规卷积(b)(c)是深度可分离卷积,(b)是depth_wise conv,用于收集每一channel的特征,(c)是point_wise conv,将原通道数为Cin的feature map 调整为Cout。</p>
+<ul>
+<li>举例</li>
+</ul>
+<blockquote>
+<p> 举个例子比较参数量：假设input.shape = [c1, H, W] output.shape = [c2, H, W]                                                                          (a)常规卷积参数量=kernel_size <em> kernel_size </em> c1 <em> c2                                                                                                                    (b)深度可分离卷积参数量=kernel_size </em> kernel_size <em> c1 + 1</em> 1* c2 </p>
+</blockquote>
+<p>上面的例子我们可以清楚地看到,得到相同的output.shape,直观看上去,深度可分离卷积的参数量比常规卷积少了一个数量级。</p>
+<ul>
+<li>分析</li>
+</ul>
+<p>深度可分离卷积同时考虑图像的区域和通道(深度可分离卷积首先只考虑区域depth_wise,然后再只考虑通道point_wise)实现了图像的区域和通道的完全分离。</p>
+<ul>
+<li>代码实现(pytorch)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">...</span><br><span class="line">model &#x3D; nn.Sequential(</span><br><span class="line">        nn.Conv2d(in_channels &#x3D; in_channel, out_channels &#x3D; in_channel, </span><br><span class="line">kernel_size &#x3D; kernel_size, stride &#x3D; stride, padding &#x3D; 1, dilation &#x3D; dilation, group &#x3D; in_channel),</span><br><span class="line">        nn.Conv2d(in_channels &#x3D; in_channel, out_channels &#x3D; out_channel kernel_size &#x3D; 1, padding &#x3D; 0)</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>之所以在写在前面中提到,本文的题目一定要先是分组卷积再是深度可分离卷积,因为在我看来后者是前者的极端情况(分组卷积的group设为in_channel,即每组的channel数量为1),尽管形式上两者有比较大的差别:分组卷积只进行一次卷积操作即可,而深度可分离卷积需要进行两次——先depth_wise再point_wise卷积,但他们本质上是一样的。</p>
+<p>深度可分离卷积进行一次卷积是无法达到输出指定维度的tensor的,这是由它将group设为in_channel决定的,输出的tensor通道数只能是in_channel,不能达到要求,所以又用了11的卷积改变最终输出的通道数。这样的想法也是自然而然的,BottleNeck不就是先1 <em> 1卷积减少参数量再3 </em> 3卷积feature map,最后再1 <em> 1恢复原来的通道数,所以BottleNeck的目的就是减少参数量。提到BottleNeck结构就是想说明1</em>1卷积经常用来改变通道数。</p>
+<p>这样,分组卷积和深度可分离卷积就能很好地联系起来并牢牢掌握啦！！！</p>
+
+      
+
+		
+		
+		  <div hidden="hidden"></div>
+		
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/cassieyy.github.io/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/cassieyy.github.io/2020/08/24/paper9/" class="archive-article-date">
-  	<time datetime="2020-08-24T09:42:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/cassieyy.github.io/2020/08/24/paper9/">paper9</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">ASPP, Multi-scale</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Group conv</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Separable conv</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/cassieyy.github.io/categories/Semantic-Seg//" class="article-tag-list-link color3">Semantic Seg</a>
+        			<a href="/cassieyy.github.io/categories/Convolution//" class="article-tag-list-link color2">Convolution</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/cassieyy.github.io/2020/08/16/paper8/" class="archive-article-date">
-  	<time datetime="2020-08-16T09:32:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-16</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/cassieyy.github.io/2020/09/08/%E4%BA%A7%E5%87%BA%E5%BC%8F%E5%AD%A6%E4%B9%A0Git-%E4%BA%8C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">产出式学习Git(二)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/cassieyy.github.io/2020/08/16/paper8/">paper8</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Gate CNN, Attention, ASPP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/cassieyy.github.io/categories/paper-notes//" class="article-tag-list-link color2">paper notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一-分组卷积-Group-conv"><span class="toc-number">2.</span> <span class="toc-text">[一]分组卷积(Group conv)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-深度可分离卷积"><span class="toc-number">3.</span> <span class="toc-text">[二]深度可分离卷积</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">4.</span> <span class="toc-text">写在后面</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/cassieyy.github.io/2020/08/12/paper6-7/" class="archive-article-date">
-  	<time datetime="2020-08-12T09:46:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/cassieyy.github.io/2020/08/12/paper6-7/">paper6-7</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">paper notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/cassieyy.github.io/categories/medical-image-process-semantic-segmentation//" class="article-tag-list-link color5">medical image process, semantic segmentation</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -353,8 +429,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
