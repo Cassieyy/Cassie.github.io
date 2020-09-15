@@ -64,8 +64,8 @@
 			</ul>
 		</nav>
 		<nav>
-			<a>总文章数 12</a>
-			<a>总字数 <span class="post-count">23.5k</span></a>
+			<a>总文章数 13</a>
+			<a>总字数 <span class="post-count">25.8k</span></a>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -155,6 +155,95 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-paper2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div align="center" class="post-count">
+    字数：1.5k字 | 预计阅读时长：5分钟
+  </div>
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/cassieyy.github.io/2020/07/16/paper2/">paper2</a>
+    </h1>
+  
+
+        
+        <a href="/cassieyy.github.io/2020/07/16/paper2/" class="archive-article-date">
+  	<time datetime="2020-07-16T01:56:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>本篇论文《Deep Cascaded Attention Network for Multi-task Brain Tumor Segmentation》是中科大和其他高校合作的一篇结合attention机制的文章,文章发表在2020MICCAI.</p>
+<ul>
+<li><p>Github地址: 未给出</p>
+</li>
+<li><p>数据集：BraTS challenge 2018</p>
+</li>
+<li><p>解决问题：用cascaded model解决muti-task的问题会造成model redundancy/train complexity/task isolation</p>
+</li>
+<li><p>本文贡献：</p>
+<ul>
+<li>1.将subtask分解为不同的branches(实质上仍为single model),也就是说再一些特征提取时可以共享extractor,从而减少参数降低模型的复杂性;</li>
+<li>2.BraTS challenge是一个分级的分割任务(<a href="https://zhuanlan.zhihu.com/p/159202689" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/159202689</a> 对数据集和此任务的解释可以看我知乎文章),所以作者想到把Cascaded Attention Module(以下简称CAM)加到branch之间;</li>
+<li>3.作者认为backbone——3D-Unet的skip-connection非常低效,又因为原来concat的两个feature存在较大的gap,所以作者用FBM替代原来的skip-connection,既能缓解feature fusion gap(也可以换一种说法是指导特征融合),也能获取层间关系;</li>
+<li>4.作者可视化了CAM以证明该模块的有效性。</li>
+</ul>
+</li>
+</ul>
+        
+          <a class="article-more-a" href="/cassieyy.github.io/2020/07/16/paper2/#more">more >></a>
+        
+      
+
+		
+		
+		  <div hidden="hidden"></div>
+		
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/cassieyy.github.io/2020/07/16/paper2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-paper1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div align="center" class="post-count">
@@ -546,6 +635,14 @@ var _hmt = _hmt || [];
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Separable conv</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">GitHub</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">开源</a>
               </li>
             
             <div class="clearfix"></div>

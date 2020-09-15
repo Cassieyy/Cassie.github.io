@@ -6,21 +6,34 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://cassieyy.github.io/cassieyy.github.io">
-  <title>DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练 | Hi~ This is Cassie&#39;s blog!</title>
+  <title>产出式学习Git(三) | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加 1model &#x3D; nn.DataParallel(model)  测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。">
+  <meta name="description" content="写在前面上篇我们学习了如何随意穿梭在不同版本的文件中,即版本切换。这里的版本切换是广义上的,也就是说操作对象既可以是本地的repo又可以是远程仓库。本次学习的内容主要是介绍远程仓库,以及新概念分支。开始新的学习之前,再把我们的全局图搬过来⬇️,本次内容会涉及到整个大的闭环。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练">
-<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/index.html">
+<meta property="og:title" content="产出式学习Git(三)">
+<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/09/15/%E4%BA%A7%E5%87%BA%E5%BC%8F%E5%AD%A6%E4%B9%A0Git-%E4%B8%89/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:description" content="写在前面今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加 1model &#x3D; nn.DataParallel(model)  测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。">
+<meta property="og:description" content="写在前面上篇我们学习了如何随意穿梭在不同版本的文件中,即版本切换。这里的版本切换是广义上的,也就是说操作对象既可以是本地的repo又可以是远程仓库。本次学习的内容主要是介绍远程仓库,以及新概念分支。开始新的学习之前,再把我们的全局图搬过来⬇️,本次内容会涉及到整个大的闭环。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-09-01T03:47:31.000Z">
-<meta property="article:modified_time" content="2020-09-10T12:18:39.658Z">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-8174aaf29f3ecf9122c9602403f9a57d_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-c7904929e75336c1257e92e02f39b34c_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-f5a0bf108c5bf4f5e6999974c439d41c_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-24866a81f59592298d474ffb5045fd8e_b.png">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-58e38cd453469bcb0de449a501b78e7d_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-ff096046b24aec5198818ebabd5cab54_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-5f722e86e1ed05ea1b42c5db6a88451c_b.png">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-0bc130ef3026f2361b0dd62424106b69_b.png">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-66f5f9c63ee2ec64279d5bd5e9cf9644_b.png">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-bd89e924d0be3c0f295b8f997f5d35ca_b.png">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-01dcb53e150baab7f358174445a68c4d_b.png">
+<meta property="article:published_time" content="2020-09-15T02:15:29.000Z">
+<meta property="article:modified_time" content="2020-09-15T02:18:58.351Z">
 <meta property="article:author" content="Cassie">
-<meta property="article:tag" content="Pytorch">
-<meta property="article:tag" content="分布式训练">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="GitHub">
+<meta property="article:tag" content="开源">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic2.zhimg.com/v2-8174aaf29f3ecf9122c9602403f9a57d_b.png">
   
     <link rel="alternative" href="/atom.xml" title="Hi~ This is Cassie&#39;s blog!" type="application/atom+xml">
   
@@ -158,9 +171,9 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-DataParallel-DistributedDataParallel用于Pytorch分布式训练" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-产出式学习Git-三" class="article article-type-post " itemscope itemprop="blogPost">
   <div align="center" class="post-count">
-    字数：3k字 | 预计阅读时长：11分钟
+    字数：2.4k字 | 预计阅读时长：8分钟
   </div>
   <div class="article-inner">
     
@@ -168,114 +181,104 @@
         
   
     <h1 class="article-title" itemprop="name">
-      DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练
+      产出式学习Git(三)
     </h1>
   
 
         
-        <a href="/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/" class="archive-article-date">
-  	<time datetime="2020-09-01T03:47:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-01</time>
+        <a href="/cassieyy.github.io/2020/09/15/%E4%BA%A7%E5%87%BA%E5%BC%8F%E5%AD%A6%E4%B9%A0Git-%E4%B8%89/" class="archive-article-date">
+  	<time datetime="2020-09-15T02:15:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model &#x3D; nn.DataParallel(model)</span><br></pre></td></tr></table></figure>
-
-<p>测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。</p>
-
-
-<p>这里需要注意一下:多卡训练要考虑通信开销的, 是个trade-off的过程,不见得四块卡一定比两块卡快多少,训练到四块卡的时候可能io通信开销已经占了大头。</p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><a href="https://zhuanlan.zhihu.com/p/219970130" target="_blank" rel="noopener">上篇</a>我们学习了如何随意穿梭在不同版本的文件中,即版本切换。这里的版本切换是广义上的,也就是说操作对象既可以是本地的repo又可以是远程仓库。本次学习的内容主要是介绍远程仓库,以及新概念分支。开始新的学习之前,再把我们的全局图搬过来⬇️,本次内容会涉及到整个大的闭环。</p>
+<p><img src="https://pic2.zhimg.com/v2-8174aaf29f3ecf9122c9602403f9a57d_b.png" alt="img"></p>
 <a id="more"></a>
 
-<h2 id="nn-DataParallel"><a href="#nn-DataParallel" class="headerlink" title="nn.DataParallel()"></a>nn.DataParallel()</h2><p>(我是单机多卡训练,首先送上官网nn.DataParallel()链接)</p>
-<p><a href="https://link.zhihu.com/?target=https%3A//pytorch.org/docs/stable/generated/torch.nn.DataParallel.html%3Fhighlight%3Dnn%20dataparallel%23torch.nn.DataParallel">https://pytorch.org/docs/stable/generated/torch.nn.DataParallel.html?highlight=nn%20dataparallel#torch.nn.DataParallelpytorch.org</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CLASS torch.nn.DataParallel(module, device_ids&#x3D;None, output_device&#x3D;None, dim&#x3D;0)</span><br></pre></td></tr></table></figure>
+<h2 id="一-远程仓库"><a href="#一-远程仓库" class="headerlink" title="[一]远程仓库"></a>[一]远程仓库</h2><p>就像前面<a href="https://zhuanlan.zhihu.com/p/206442219" target="_blank" rel="noopener">第一篇</a>提到的,要是个人工作的话其实上面的本地小闭环已经可以满足需求了,但要对需要团队协作的大项目来说,Git就显示出它的优越性了。Git是分布式版本控制系统,即同一个Git仓库,可以分布到不同的机器上。</p>
+<p>由以前提到的内容可以比较容易想到,我们找台Git服务器,24小时开机,其他人可以从服务器的仓库中克隆一份到本地,并且自己的提交从本地仓库推送到服务器仓库里,同时可以从服务器仓库中拉取别人的提交,这样理论上就可以实现分布式版本控制了。好在这样的服务器是已经存在的！就是著名的GitHub(<strong>知乎</strong>+<strong>GitHub</strong>简直科研利器),这个网站专门提供Git仓库托管服务,所以只要注册一个GitHub账号,就可以免费获得Git远程仓库啦。</p>
+<p>因为Git仓库和GitHub的连接是通过SSH加密的,所以需要通过下面几步稍稍配置一下(为了简洁排版这里只列出几行命令,如果配置中有什么问题可以交流。)</p>
+<p>1.创建SSH Key</p>
+<p>p.s.可以先去自己的用户目录下.ssh/文件夹下是不是已经有id_rsa和id_rsa.pub两个文件了,<strong>如果有</strong>此步可以省略(记得以前配vscode+remote-ssh也要进行同样的操作)。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 创建SSH Key 在用户根目录下输入⬇️(我猜这个邮箱要用GitHub关联的那个邮箱</span><br><span class="line">$ ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li><strong>参数定义</strong></li>
-</ul>
-<p><strong>module</strong>是要放到多卡训练的模型;</p>
-<p><strong>device_ids</strong>数据类型是一个列表, 表示可用的gpu卡号;</p>
-<p><strong>output_devices</strong>数据类型也是列表,表示模型输出结果存放的卡号(如果不指定的话,默认放在0卡,这也是为什么多gpu训练并不是负载均衡的,一般0卡会占用的多,这里还涉及到一个小知识点——如果程序开始加os.environ[“CUDA_VISIBLE_DEVICES”] = “2, 3”, 那么0卡(逻辑卡号)指的是2卡(物理卡号))。</p>
-<ul>
-<li><strong>如何多卡加速训练</strong></li>
-</ul>
-<p>讲原理：</p>
-<p>网络在<strong>前向传播</strong>的时候会将model从主卡(默认是逻辑0卡)复制一份到所有的device上,input_data会在batch这个维度被分组后upload到不同的device上计算。在<strong>反向传播</strong>时，每个卡上的梯度会汇总到主卡上,求得梯度的均值后,再用反向传播更新单个GPU上的模型参数，最后将更新后的模型参数复制到剩余指定的GPU中进行下一轮的前向传播,以此来实现并行。有多少个gpu参与计算就有多少个gradient求平均,关于gradient求平均是否合理以及如何改进可以参考：</p>
-<p><a href="https://link.zhihu.com/?target=https%3A//github.com/pytorch/pytorch/pull/7973/commits/c285b3626a7a4dcbbddfba1a6b217a64a3f3f3be">https://github.com/pytorch/pytorch/pull/7973/commits/c285b3626a7a4dcbbddfba1a6b217a64a3f3f3begithub.com</a></p>
-<p>除了model和data,其他数据的分配规则如下:允许将Arbitrary positional和keyword添加到所有gpu上并行计算, 但有些数据类型是专门处理的。tensor将分配到指定的卡上,默认为0(这个地方我可能理解的不对,原话是“tensors will be scatteredon dim specified (default 0)”如果有人有其他正确的理解,望不吝赐教)。对元组、列表和字典类型的数据浅拷贝后复制到其他卡上。</p>
-<p>举例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">os.environ[&#39;CUDA_VISIBLE_DEVICES&#39;]&#x3D;&#39;1, 2&#39; # 指定逻辑卡号。比如这样写的话,第0块卡指的是物理上的第2块</span><br><span class="line"></span><br><span class="line">device &#x3D; torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)</span><br><span class="line">input &#x3D; torch.randn(8, 4, 160, 160).to(device) # 将数据放到gpu上</span><br><span class="line">model &#x3D; nn.Conv2d(4, 3, kernel_size &#x3D; 3, stride &#x3D; 1, padding &#x3D; 1)</span><br><span class="line">model &#x3D; model.to(device)# 将模型放到gpu上</span><br><span class="line">output &#x3D; model(input) </span><br><span class="line">model &#x3D; torch.nn.DataParallel(model, device_ids&#x3D;[0, 1])</span><br></pre></td></tr></table></figure>
+<p>然后一路回车(印象里是连敲三个回车),使用默认值即可。这时会在用户目录的.ssh/文件夹下看到id_rsa和id_rsa.pub两个文件在,其中id_rsa是私钥,id_rsa.pub是公钥,可以告诉任何人。这里注意同一个用户的不同repo和GitHub连接只要配一次就可以。</p>
+<p>2.登陆GitHub,配置SSH</p>
+<p><img src="https://pic1.zhimg.com/v2-c7904929e75336c1257e92e02f39b34c_b.png" alt="img"></p>
+<p>配置SSH步骤(可以看到我以前配置的两个key分别是hexo和49.52.10.50)</p>
+<p><img src="https://pic1.zhimg.com/v2-f5a0bf108c5bf4f5e6999974c439d41c_b.png" alt="img"></p>
+<p>添加公钥</p>
+<p>如果你有两台电脑,那么就要分别在两台主机生成两对密钥对,将两个公钥分别添加到SSH key中。这是因为GitHub需要识别出我们推送的提交确实是我们推送的,而非别人冒充,而Git支持SSH协议,所以GitHub只要知道了公钥,就可以确认只有我们才能推送。</p>
+<p>\3. 新建远程仓库(两种case)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># case1:命令行新建一个远程仓库</span><br><span class="line">echo &quot;# repo_name&quot; &gt;&gt; README.md</span><br><span class="line"># 这就是生成.git文件夹的命令</span><br><span class="line">git init </span><br><span class="line"># 添加说明文件</span><br><span class="line">git add README.md </span><br><span class="line"># commit提交</span><br><span class="line">git commit -m &quot;first commit&quot;</span><br><span class="line">git branch -M master</span><br><span class="line"># 用来关联远程仓库</span><br><span class="line">git remote add origin git@github.com:Cassieyy&#x2F;repo_name.git </span><br><span class="line"># 第一次推送master分支的所有内容</span><br><span class="line">git push -u origin master </span><br><span class="line"># 第一次以后,用以下命令推送最新修改到远程仓库</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
 
-<p>——————————————————这是分割线——————————————————</p>
-<p>如果写到这就戛然而止,就和CSDN上那些小笔记的就没什么区别了…当时用多卡训练,我选择nn.DataParallel(model)纯属因为它简单,只要两三行代码就能实现,今天再看官网,人家白底黑字写着<strong>warning</strong>和<strong>recommended:</strong></p>
+<p>p.s.倒数第二行的origin就像是远程仓库的代号一样,默认它表示远程仓库。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># case2:将已有的本地repo推送到GitHub</span><br><span class="line"># 建立联系</span><br><span class="line">git remote add origin git@github.com:Cassieyy&#x2F;repo_name.git</span><br><span class="line">git branch -M master</span><br><span class="line"># 第一次推送master的所有内容</span><br><span class="line">git push -u origin master</span><br><span class="line"># 第一次以后,用以下命令推送最新修改到远程仓库</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
 
+<p>好了,现在你有自己在GitHub上的远程仓库了,当然你也可以去clone其他人的开源项目。</p>
+<blockquote>
+<p>知识补充1:GitHub上fork和clone的区别  fork:在github页面,点击fork按钮,将别人的仓库复制一份到自己的远程仓库. clone:直接将GitHub中的仓库克隆到自己本地电脑中. 知识补充2:pull request的作用 比如在仓库的主人(A)没有把我们添加为项目合作者(contributer)的前提下,我们将A的某个仓库名为A’s_repo办法通过push将代码贡献到A’s_repo中。 要想将你的代码贡献到A’s_repo中,我们应该： <em> 在A的仓库中fork项目A’s_repo(此时我们自己的GiHub就有一个一模一样的仓库,但是URL不同） </em> 将我们修改的代码push到自己GiHub中的仓A’s_repo中 * 点击pull request,主人就会收到请求,并决定要不要接受你的代码.</p>
+</blockquote>
+<h2 id="二-分支管理"><a href="#二-分支管理" class="headerlink" title="[二]分支管理"></a>[二]分支管理</h2><p>在多人协作开发过程中,大家各自开发自己的且大家工作量相当,谁都不想被另一方的代码“吞并”,这时候总得留个大管家来整合本项目所有的进展,这个“大管家”就是Git里主分支(master)的概念,而参与协作开发的个人,做法就是创建一个属于自己的分支,别人看不到,还继续在原来的分支上正常工作,直到开发完毕后,再一次性合并到大管家那里,既安全又不影响别人工作。</p>
+<p>正式介绍之前,我们先明确两个概念：</p>
+<p>HEAD指针指向当前所在分支,即可以通过知道HEAD指向谁来确定当前在哪个分支;</p>
+<p>master指针指向最新的提交,指上传到远程仓库里最新的提交;</p>
+<p><strong>2.1创建与合并分支</strong></p>
+<p>HEAD和master之间的逻辑关系如下图所示: </p>
+<p><img src="https://pic3.zhimg.com/v2-24866a81f59592298d474ffb5045fd8e_b.png" alt="img"></p>
+<p>p1</p>
+<p> 比如我们新建一个分支Cassie,并切换到这个分支,上面的图就变成:</p>
+<p><img src="https://pic2.zhimg.com/v2-58e38cd453469bcb0de449a501b78e7d_b.png" alt="img"></p>
+<p>p2</p>
+<p>此后,我将在Cassie这条分支上在本地进行开发,上面的图进一步演化为:</p>
+<p><img src="https://pic1.zhimg.com/v2-ff096046b24aec5198818ebabd5cab54_b.png" alt="img"></p>
+<p>p3</p>
+<p>如果我将Cassie分支上的改动提交到主分支,上面的图变为:</p>
+<p><img src="https://pic1.zhimg.com/v2-5f722e86e1ed05ea1b42c5db6a88451c_b.png" alt="img"></p>
+<p>p4</p>
+<p>提交完成,master被更新之后,我们可以选择删掉Cassie分支,上面的图就演变成：</p>
+<p><img src="https://pic2.zhimg.com/v2-0bc130ef3026f2361b0dd62424106b69_b.png" alt="img"></p>
+<p>p5</p>
+<p>我们可以直观看到,p1和p5相比,多了新的提交,而这个提交是在分支上完成的哦~上面的几种演化,我们用代码行总结一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 创建并切换到分支</span><br><span class="line">$ git checkout -b Cassie</span><br></pre></td></tr></table></figure>
 
-<p>关于nn.DataParallel(以下简称DP)和DistributedDataParallel(以下简称DDP)的区别：</p>
-<ul>
-<li>DDP通过<strong>多进程</strong>实现的。也就是说操作系统会为每个GPU创建一个进程,从而避免了Python解释器GIL带来的性能开销。而DataParallel()是通过<strong>单进程控制多线程</strong>来实现的。还有一点,DDP也不存在前面DP提到的负载不均衡问题。</li>
-<li>参数更新的方式不同。DDP在各进程梯度计算完成之后,各进程需要将梯度进行汇总平均,然后再由 <code>rank=0</code> 的进程,将其 <code>broadcast</code> 到所有进程后,各进程用该梯度来独立的更新参数而 DP是梯度汇总到GPU0,反向传播更新参数,再广播参数给其他剩余的GPU。由于DDP各进程中的模型,初始参数一致 (初始时刻进行一次 broadcast),而每次用于更新参数的梯度也一致,因此,各进程的模型参数始终保持一致。而在DP中,全程维护一个 optimizer,对各个GPU上梯度进行求平均,而在主卡进行参数更新,之后再将模型参数 broadcast 到其他GPU.相较于DP, DDP传输的数据量更少,因此速度更快,效率更高。</li>
-<li>DDP支持 all-reduce(指汇总不同 GPU 计算所得的梯度,并同步计算结果),broadcast,send 和 receive 等等。通过 MPI 实现 CPU 通信,通过 NCCL 实现 GPU 通信,缓解了“写在前面“提到的进程间通信有大的开销问题。</li>
-</ul>
-<p>唯一不好的地方是DDP相对后者来说,使用起来会有些麻烦(不然当时我也不会两三行就能实现的DP了),下面我们一起借助官网教程,看看它具体怎么用的吧～</p>
-<h2 id="recommended-to-use-DistributedDataParallel-既可单机多卡又可多机多卡"><a href="#recommended-to-use-DistributedDataParallel-既可单机多卡又可多机多卡" class="headerlink" title="(recommended to use)DistributedDataParallel (既可单机多卡又可多机多卡)"></a><strong>(recommended to use)<code>DistributedDataParallel</code> (既可单机多卡又可多机多卡)</strong></h2><p>先奉上官网nn.DistributedDataParallel(model)链接</p>
-<p><a href="https://link.zhihu.com/?target=https%3A//pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html%23torch.nn.parallel.DistributedDataParallel">https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html#torch.nn.parallel.DistributedDataParallelpytorch.org</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CLASS torch.nn.parallel.DistributedDataParallel(module, device_ids&#x3D;None, output_device&#x3D;None, </span><br><span class="line">dim&#x3D;0, broadcast_buffers&#x3D;True, process_group&#x3D;None, bucket_cap_mb&#x3D;25, </span><br><span class="line">find_unused_parameters&#x3D;False, check_reduction&#x3D;False)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>知识补充 # 上面一条命令相当于下面两条  $ git branch Cassie # 创建新分支Cassie  $ git checkout Cassie # 切换到Cassie分支</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 查看当前分支</span><br><span class="line">$ git checkout</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>参数定义</li>
-</ul>
-<p><strong>module</strong>是要放到多卡训练的模型;</p>
-<p><strong>device_ids</strong>数据类型是一个列表, 表示可用的gpu卡号;</p>
-<p><strong>output_devices</strong>数据类型也是列表,表示模型输出结果存放的卡号(如果不指定的话,默认放在0卡,这也是为什么多gpu训练并不是负载均衡的,一般0卡会占用的多,这里还涉及到一个小知识点——如果程序开始加os.environ[“CUDA_VISIBLE_DEVICES”] = “2, 3”, 那么0卡(逻辑卡号)指的是2卡(物理卡号))。</p>
-<p><strong>dim</strong>指按哪个维度进行数据的划分,默认是输入数据的第一个维度,即按batchsize划分(设数据数据的格式是B, C, H, W)</p>
-<p>其他参数可以康康官网的解释(我没太看懂,就用默认的好了)</p>
-<ul>
-<li>分布式的几个概念</li>
-</ul>
-<p>1.<strong>group:</strong>即进程组。默认情况下，只有一个组，一个 job 即为一个组，也即一个 world。 当需要进行更加精细的通信时，可以通过 new_group 接口，使用 word 的子集，创建新组，用于集体通信等;</p>
-<p>2.<strong>world size:</strong>表示全局进程个数;</p>
-<p>3.<strong>rank:</strong>表示进程序号，用于进程间通讯，表征进程优先级。rank = 0 的GPU为主卡;</p>
-<p>4.<strong>local_rank:</strong>进程内，GPU 编号，非显式参数，由 torch.distributed.launch 内部指定。比方说， rank = 3，local_rank = 0 表示第 3 个进程内的第 1 块 GPU.</p>
-<ul>
-<li><strong>如何多卡加速训练</strong></li>
-</ul>
-<p><strong>讲原理：</strong></p>
-<p>DDP在各进程梯度计算完成之,各进程需要将梯度进行汇总平均,然后再由 rank=0 的进程,将其 broadcast 到所有进程后,各进程用该梯度来独立的更新参数而 DP是梯度汇总到GPU0,反向传播更新参数,再广播参数给其他剩余的GPU。由于DDP各进程中的模型,初始参数一致 (初始时刻进行一次 broadcast),而每次用于更新参数的梯度也一致,因此,各进程的模型参数始终保持一致。而在DP中,全程维护一个 optimizer,对各个GPU上梯度进行求,而在主卡进行参数更新,之后再将模型参数 broadcast 到其他GPU.相较于DP, DDP传输的数据量更少,因此速度更快,效率更高。</p>
-<p><strong>举例子(踩坑无数后,亲测成功!!)：</strong></p>
-<p><strong>先介绍各个过程,最后总结代码段</strong></p>
-<p>1.<code>init_process_group</code>初始化进程组(如果需要进行前面提到的小组内集体通信,用<code>new_group</code>创建子分组);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 初始化使用nccl后端,官网还提供了‘gloo’作为backend,俺觉得知道nccl是用来GPU之间进行通信的就可以</span><br><span class="line">torch.distributed.init_process_group(backend&#x3D;&quot;nccl&quot;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>知识补充  上述命令会列出所有分支,当前分支前面会有一个*</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 用于合并指定分支的内容到当前分支</span><br><span class="line">$ git merge Cassie</span><br></pre></td></tr></table></figure>
 
-<p>2.使用DistributedSampler(改dataloader中<code>sampler=train_sampler</code>)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># train_dataset就是自己的数据集</span><br><span class="line">train_sampler &#x3D; torch.utils.data.distributed.DistributedSampler(train_dataset)</span><br><span class="line">dataloader &#x3D; DataLoader(dataset, batch_size&#x3D;batch_size, shuffle &#x3D; (train_sampler is None), sampler&#x3D;train_sampler, pin_memory&#x3D;False)</span><br></pre></td></tr></table></figure>
+<p>比如我当前分支是master或者我git checkout master,切到主分支,那么执行上述的代码行就把Cassie内容合并到主分支master上了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 过河拆桥之举——“删掉Cassie分支“</span><br><span class="line">$ git branch -d Cassie</span><br></pre></td></tr></table></figure>
 
-<p>ps.据说<code>pin_memory</code>设为True会加速训练(但官网给到但参数设置是False)。</p>
-<p>3.创建DDP模型进行分布式训练</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># DDP是all-reduce的,即汇总不同 GPU 计算所得的梯度,并同步计算结果.all reduce 后不同 GPU 中模型的梯度均为 all reduce 之前各 GPU 梯度的均值.</span><br><span class="line">model &#x3D; torch.nn.parallel.DistributedDataParallel(model, device_ids&#x3D;[args.local_rank], output_device&#x3D;args.local_rank, find_unused_parameters&#x3D;True)</span><br></pre></td></tr></table></figure>
+<p><strong>2.2解决冲突</strong></p>
+<p>有一种情况是,master和Cassie分支上都有了新的提交,产生冲突,这种情况下,Git无法执行“快速合并”,只能试图把各自的修改合并起来展示给用户,即Git的冲突解决只能通过手动解决冲突。</p>
+<p><strong>2.3分支管理</strong></p>
+<p>在实际开发中，我们应该按照几个基本原则进行分支管理：</p>
+<p>1.master分支应该是非常稳定的,也就是仅用来发布新版本,平时不能在上面干活;干活都在dev分支上,也就是说自己的分支是不稳定的。到某个时候,比如1.0版本发布时,再把分支合并到master上，在master分支发布1.0版本；</p>
+<p>2.团队小伙伴们每个人都在dev分支上干活，每个人都有自己的分支,时不时地往dev分支上合并就可以了。</p>
+<p>3.合并分支时,如果可能,Git会用Fast forward(快进式)模式,但这种模式下,删除分支后,会丢掉分支信息。如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit,这样,从分支历史上就可以看出分支信息。</p>
+<p>比如我们在Cassie上写完新的代码,现在想将其合并到master,合并前:</p>
+<p><img src="https://pic1.zhimg.com/v2-66f5f9c63ee2ec64279d5bd5e9cf9644_b.png" alt="img"></p>
+<p>p6</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 先切换回master</span><br><span class="line">$ git checkout master</span><br><span class="line"># 非--no-ff方式的git merge分支Cassie </span><br><span class="line">$ git merge -m &quot;merge with no-ff&quot; Cassie</span><br></pre></td></tr></table></figure>
 
-<p>4.最后一步,执行python train.py时需加参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m torch.distributed.launch --nnodes&#x3D;1 --nproc_per_node&#x3D;2 --node_rank&#x3D;0  --master_port&#x3D;6005 train.py</span><br></pre></td></tr></table></figure>
+<p><img src="https://pic3.zhimg.com/v2-bd89e924d0be3c0f295b8f997f5d35ca_b.png" alt="img"></p>
+<p>p7 fast-forward模式, 看不出曾经有分支</p>
+<p>解释：因为Cassie就在 master 的下游,所以直接移动了 master 的指针,master 和 Cassie指向相同,这样其实看不出有过合并。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># --no-ff方式的git merge分支Cassie   </span><br><span class="line">$ git merge --no-ff -m &quot;merge with no-ff&quot; Cassie</span><br></pre></td></tr></table></figure>
 
-<h2 id="代码段总结"><a href="#代码段总结" class="headerlink" title="代码段总结"></a>代码段总结</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">###DDP</span><br><span class="line"></span><br><span class="line"># 引入包</span><br><span class="line">import argparse</span><br><span class="line">import torch.distributed as dist</span><br><span class="line"></span><br><span class="line"># 设置可选参数</span><br><span class="line">parser &#x3D; argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(&#39;--local_rank&#39;, default&#x3D;0, type&#x3D;int,</span><br><span class="line">                    help&#x3D;&#39;node rank for distributed training&#39;)</span><br><span class="line">args &#x3D; parser.parse_args()</span><br><span class="line"># print(args.local_rank)</span><br><span class="line">dist.init_process_group(backend&#x3D;&#39;nccl&#39;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 1.上面讲到的初始化进程组</span><br><span class="line">dist.init_process_group(backend&#x3D;&#39;nccl&#39;)</span><br><span class="line">torch.cuda.set_device(args.local_rank)</span><br><span class="line"></span><br><span class="line"># 2.使用DistributedSampler</span><br><span class="line">dataloader &#x3D; DataLoader(dataset, batch_size&#x3D;batch_size, shuffle &#x3D; (train_sampler is None), sampler&#x3D;train_sampler, pin_memory&#x3D;False)</span><br><span class="line"></span><br><span class="line"># 3.创建DDP模型进行分布式训练</span><br><span class="line">model &#x3D; nn.parallel.DistributedDataParallel(model, device_ids&#x3D;[args.local_rank], output_device&#x3D;args.local_rank, find_unused_parameters&#x3D;True)</span><br><span class="line"></span><br><span class="line"># 4.命令行开始训练 --nproc_per_node参数指定为当前主机创建的进程数(比如我当前可用但卡数是2 那就为这个主机创建两个进程,每个进程独立执行训练脚本)</span><br><span class="line"># 我是单机多卡, 所以nnode&#x3D;1, 就是一台主机, 一台主机上--nproc_per_node个进程</span><br><span class="line">python -m torch.distributed.launch --nnodes&#x3D;1 --nproc_per_node&#x3D;2 --node_rank&#x3D;0  --master_port&#x3D;6005 train.py</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h2><p>关于程序执行的命令行,我被困扰最久的一个点在<code>args</code>这个可变参数上,凭借着我对<code>args</code>贫瘠的认知, 不知道该把起始时我们定义的<code>local_rank</code>设置成多少。这里要记录一下,pytorch 为我们提供了 <code>torch.distributed.launch</code> 启动器,用于在命令行分布式地执行 python 文件,所以我们只要给它留出这个位置来就可以,其他的这个启动器会帮我们搞定。也就是说在</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.cuda.set_device(args.local_rank)</span><br><span class="line">model &#x3D; nn.parallel.DistributedDataParallel(model, device_ids&#x3D;[args.local_rank], output_device&#x3D;args.local_rank, find_unused_parameters&#x3D;True)</span><br></pre></td></tr></table></figure>
-
-<p>这些代码段中(涉及到args.local_rank的地方)都是不需要改动的,我之前一直致力于改这些点,调试花费了很长时间。</p>
-
-
-<p><strong>还要注意</strong>：在<strong>DataParallel</strong>中,batch_size设置必须为单卡的n倍, 但是在<strong>DistributedDataParallel</strong>内,batch_size设置于单卡一样即可(不然就要OOM啦) .</p>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>文章写到这里好像也并没有解决我最开始抛出的问题,但在解决问题但过程中蹭蹭蹭涨了好多知识,我怀疑问题出现的原因是我训练是在两块卡上,但是测试的时候是一块卡,这个我再试试。另外分布式训练还涉及了好多好多知识点,同学今天在研究apex,这是Nividia提供的分布式方法,好像要比DP和DDP还要快,不仅如此<code>apex</code>还能进行四种精度的训练(DDP只能双精度混合训练,float16和float32),在看文档的时候还涉及了<code>hook</code>(又是我的知识盲区)。</p>
-<p>以及下面加载模型的函数,需要研究一下<code>strict</code>这个参数,有时候不加会报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def load_model_checkpoints(model,checkpoint_path&#x3D;&#39;.&#x2F;checkpoints&#x2F;newSeUnet&#x2F;latest.pth&#39;):</span><br><span class="line">    # model &#x3D; nn.DataParallel(model)</span><br><span class="line">    state_dict &#x3D; torch.load(checkpoint_path)</span><br><span class="line">    model.load_state_dict(state_dict, strict&#x3D;False)</span><br></pre></td></tr></table></figure>
-
-<p>两个程序都用DDP跑起来啦超开心！今天先讲到这啦～</p>
+<p><img src="https://pic2.zhimg.com/v2-01dcb53e150baab7f358174445a68c4d_b.png" alt="img"></p>
+<p>p8 普通合并模式,有合并的记录</p>
+<p>即会保留分支信息。合并分支时加上–no-ff参数就可以用普通模式合并,合并后的历史有分支,能看出来曾经做过合并。</p>
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>产出式学习Git三篇先写到这里啦,因为有更重要且必须要做的事情,等以后想到什么再来补充完善吧～</p>
 
       
 
@@ -294,11 +297,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Pytorch</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Git</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">分布式训练</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">GitHub</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">开源</a>
         		</li>
       		
 		</ul>
@@ -365,7 +372,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/09/15/%E4%BA%A7%E5%87%BA%E5%BC%8F%E5%AD%A6%E4%B9%A0Git-%E4%B8%89/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -379,18 +386,9 @@
   
 <nav id="article-nav">
   
-    <a href="/cassieyy.github.io/2020/09/02/Git%E4%BA%A7%E5%87%BA%E5%BC%8F%E5%AD%A6%E4%B9%A0-%E4%B8%80/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Git产出式学习(一)
-        
-      </div>
-    </a>
   
-  
-    <a href="/cassieyy.github.io/2020/08/24/paper9/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">paper9</div>
+    <a href="/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv)</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -417,7 +415,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nn-DataParallel"><span class="toc-number">2.</span> <span class="toc-text">nn.DataParallel()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#recommended-to-use-DistributedDataParallel-既可单机多卡又可多机多卡"><span class="toc-number">3.</span> <span class="toc-text">(recommended to use)DistributedDataParallel (既可单机多卡又可多机多卡)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码段总结"><span class="toc-number">4.</span> <span class="toc-text">代码段总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#踩坑记录"><span class="toc-number">5.</span> <span class="toc-text">踩坑记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">6.</span> <span class="toc-text">写在后面</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一-远程仓库"><span class="toc-number">2.</span> <span class="toc-text">[一]远程仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-分支管理"><span class="toc-number">3.</span> <span class="toc-text">[二]分支管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">4.</span> <span class="toc-text">写在后面</span></a></li></ol>
                     </div>
                 </span>
             </div>
