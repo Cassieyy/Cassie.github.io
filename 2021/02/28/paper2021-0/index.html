@@ -8,17 +8,31 @@
   <link rel="dns-prefetch" href="https://cassieyy.github.io/cassieyy.github.io">
   <title>paper2021_0 | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Bitter before sweet!">
+  <meta name="description" content="写在前面 Rethinking Semantic Segmentation from a Sequence-to-Sequence Perspective with Transformers 发表在2020CVPR 原文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2012.15840 代码实现(Pytorch)：920232796&#x2F;SETR-pytorch(非官方) 数据集(三个)：City">
 <meta property="og:type" content="article">
 <meta property="og:title" content="paper2021_0">
 <meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:description" content="Bitter before sweet!">
+<meta property="og:description" content="写在前面 Rethinking Semantic Segmentation from a Sequence-to-Sequence Perspective with Transformers 发表在2020CVPR 原文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2012.15840 代码实现(Pytorch)：920232796&#x2F;SETR-pytorch(非官方) 数据集(三个)：City">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/SETR.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/img2seq.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/transformer.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/eq1.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/eq2.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/MSA.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/eq3.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/PUP.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/MLA.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/res1.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/res2.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/res3.png">
 <meta property="article:published_time" content="2021-02-28T05:36:44.000Z">
-<meta property="article:modified_time" content="2021-02-28T05:36:44.227Z">
+<meta property="article:modified_time" content="2021-02-28T06:24:57.950Z">
 <meta property="article:author" content="Cassie">
+<meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/02/28/paper2021-0/SETR.png">
   
     <link rel="alternative" href="/atom.xml" title="Hi~ This is Cassie&#39;s blog!" type="application/atom+xml">
   
@@ -67,7 +81,7 @@
 		</nav>
 		<nav>
 			<a>总文章数 15</a>
-			<a>总字数 <span class="post-count">27.3k</span></a>
+			<a>总字数 <span class="post-count">28.8k</span></a>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -158,7 +172,7 @@
           <div id="js-content" class="content-ll">
             <article id="post-paper2021-0" class="article article-type-post " itemscope itemprop="blogPost">
   <div align="center" class="post-count">
-    字数：0字 | 预计阅读时长：1分钟
+    字数：1.5k字 | 预计阅读时长：6分钟
   </div>
   <div class="article-inner">
     
@@ -179,7 +193,136 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><ul>
+<li><em>Rethinking Semantic Segmentation from a Sequence-to-Sequence Perspective with Transformers</em> 发表在2020CVPR</li>
+<li>原文地址：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2012.15840">https://arxiv.org/abs/2012.15840</a></li>
+<li>代码实现(Pytorch)：<a href="https://link.zhihu.com/?target=https%3A//github.com/920232796/SETR-pytorch">920232796/SETR-pytorch</a>(非官方)</li>
+<li>数据集(三个)：Cityscapes/ADE20K/PASCAL Context</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h2><p>典型的语义分割Encoder-Decoder结构以多次下采样损失空间分辨率为代价来抽取局部/全局特征。网络Layer一旦固定,每一层的感受野是受限的,因此要获得更大范围的语义信息,理论上需要更大的感受野即更深的网络结构。</p>
+<p>如何既能够抽取<strong>全局的语义信息,</strong>又能尽量<strong>不损失分辨率,</strong>一直是语义分割的<strong>难点</strong>。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><ul>
+<li>用常用于NLP领域的transformer作为Encoder来抽取全局的语义信息(整个过程不损失image分辨率),代替传统FCN的编码部分,从序列-序列学习的角度,为语义分割问题提供了一种新的视角；</li>
+<li>将图像序列化处理,利用Transformer框架、完全用注意力机制来实现Encoder的功能；</li>
+<li>提出三种复杂度不同的Decoder结构。</li>
+</ul>
+<h2 id="整体网络结构"><a href="#整体网络结构" class="headerlink" title="整体网络结构"></a>整体网络结构</h2><p>如下图,模型本质上是一个ViT+Decoder结构。</p>
+<p>​    <img src="/cassieyy.github.io/2021/02/28/paper2021-0/SETR.png" class title="[SETR网络结构 sequence-to-sequence prediction model]"></p>
+<ul>
+<li><p><strong>part1 图像序列化处理</strong></p>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/img2seq.png" class title="[image to sequence]">
+
+<blockquote>
+<p>因为NLP中transformation的输入是一维序列,所以需要把图像(H x W x C)转换成1D。<br>法1: 按pixel-wise进行flatten。考虑到计算量问题所以此方法不通。<br>法2: 按patch-wise进行flatten。本文采用此方法。</p>
+</blockquote>
+<ol>
+<li>将H x W x 3的图像序列化为 256个<code>H/16*W/16*3</code>的patch。这样transformer的输入sequence length就是<code>H/16*W/16</code> ;</li>
+<li>向量化后的patch<code>p_i</code>经过<code>Linear Projection</code>function得到向量<code>e_i</code> ;</li>
+</ol>
+<blockquote>
+<p>整个过程维度变化是：(source image) H × W × C –&gt; (patch) H/16 × W/16 × C –&gt; (transformer sequence) (H × W)/256 × C<br>注：NLP transformation的input维度要求是 L × C。L是序列长度，C是channel-size。</p>
+</blockquote>
+<p>经过上面两步我们得到第一层Transformer layer的输入：</p>
+<p>E = { e1 + p1, e2 + p2, …, e_L + p_L }</p>
+<p>旁边注释<code>e_i</code>是patch embedding,<code>p_i</code>是position embedding。</p>
+</li>
+<li><p><strong>part2 Transformer</strong></p>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/transformer.png" class title="[transformer]">
+
+<p>每个Transformer层由多头注意力、LN层、MLP层构成。其输出结果即<code>{Z1,Z2,Z3…ZLe}</code>将上一步得到的<code>E</code>输入到24个串联的transformer中,即每个transformer的感受野是整张image。</p>
+<p>贴一点transformer的公式:</p>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/eq1.png" class title="[transformer]">
+
+<blockquote>
+<p>(q, k, v)</p>
+</blockquote>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/eq2.png" class title="[transformer]">
+
+<blockquote>
+<p>SA(self-attention)</p>
+</blockquote>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/MSA.png" class title="[transformer]">
+
+<blockquote>
+<p>MSA</p>
+</blockquote>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/eq3.png" class title="[transformer]">
+
+<blockquote>
+<p>the output of the transformer</p>
+</blockquote>
+<p>说明：</p>
+<ol>
+<li>self-attention输入是一个三元组 (q, k, v)。</li>
+<li>三元组(q, k, v)的计算方式如上图(1),其中WQ,WK,WV是随机矩阵(learnable params)。</li>
+<li>多头注意力机制是指有多组(q, k, v)矩阵,一组(q, k, v)矩阵代表一次注意力机制的运算,将这多个矩阵拼接起来后再乘以一个参数矩阵WO,即可得出最终的多注意力层的输出。</li>
+<li>利用残差思想residual connection得到最终结果。</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p><strong>part3 Decoder</strong></p>
+<p>文中提出了三种decoder的设计:</p>
+<p>(a)Naive upsampling (Naive)</p>
+<p>2-layer: 1 × 1 conv + sync batch norm (w/ ReLU) + 1 × 1 conv</p>
+<p>将Transformer输出的特征维度降到分类类别数后经过双线性上采样恢复原分辨率。</p>
+<p>(b)Progressive UPsampling (PUP）</p>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/PUP.png" class title="[transformer]">
+
+<p>交替使用卷积层和两倍上采样操作。为了从<code>H/16 × W/16 × 1024</code> 恢复到<code>H × W × 19</code>(19是cityscape的类别数) 需要4次操作,以恢复到原分辨率。</p>
+<p>(c)Multi-Level feature Aggregation (MLA)</p>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/MLA.png" class title="[transformer]">
+
+<p>首先将Transformer的输出<code>{Z1,Z2,Z3…ZLe}</code>均匀分成M等份,每份取一个特征向量。如下图,24个transformer的输出均分成4份,每份取最后一个,即<code>{Z6,Z12,Z18,Z24}</code> .后面的Decoder只处理这些取出的向量。</p>
+<p>SETR-MLA具体步骤:</p>
+<p>​    1.2D –&gt; 3D。将<code>ZL</code> 从2D <code>(H × W)/256 × C</code>恢复到3D <code>H/16 × W/16 × C</code></p>
+<p>​    2.经过3-layer的卷积<code>1 × 1, 3 × 3, and 3 × 3</code></p>
+<p>​    3.双线性上采样<code>4×</code></p>
+<p>​    4.自上而下的融合。以增强<code>Zl</code> 之间的相互联系,如上图最后一个<code>Zl</code>理论上拥有全部上面三个feature的信息,融合即cat</p>
+<p>​    5.<code>3 × 3</code></p>
+<p>​    6.双线性插值<code>4×</code> 恢复至原分辨率。</p>
+<h2 id="损失函数设计"><a href="#损失函数设计" class="headerlink" title="损失函数设计"></a>损失函数设计</h2><p>totalloss = auxiliary loss + main loss</p>
+<p>其中main loss为<code>CrossEntropyLoss</code> ,auxiliary loss在17年CVPR有提及</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//openaccess.thecvf.com/content_cvpr_2017/papers/Zhao_Pyramid_Scene_Parsing_CVPR_2017_paper.pdf">https://openaccess.thecvf.com/content_cvpr_2017/papers/Zhao_Pyramid_Scene_Parsing_CVPR_2017_paper.pdfopenaccess.thecvf.com</a></p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>模型在Cityscapes/ADE20K/PASCAL Context三个数据集上进行了实验。</p>
+<p>实验结果优于用传统FCN(with &amp; without attention module)抽特征的方法。</p>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/res1.png" class title="[transformer]">
+
+<blockquote>
+<p>Dataset1</p>
+</blockquote>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/res2.png" class title="[transformer]">
+
+<blockquote>
+<p>Dataset2</p>
+</blockquote>
+<img src="/cassieyy.github.io/2021/02/28/paper2021-0/res3.png" class title="[transformer]">
+
+<blockquote>
+<p>Dataset3</p>
+</blockquote>
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2></li>
+</ul>
+<ul>
+<li><p>卷积操作的感受野有限是传统FCN体系结构的一个内在限制。为突破该限制，逐渐提出两类方法1.改变卷积：包括增大卷积核kernel_size、Non-local(跟本文有点像，每次抽取的都是全局特征)和特征金字塔。例如DeepLab引入空洞卷积/SPP/ASPP。2.将注意力模块集成到FCN体系结构中：一次对所有像素的全局信息抽取特征。例如PSANet提出点向空间注意模块、DANet嵌入channel attention和spatial attention。</p>
+</li>
+<li><p>有人提到，本文是把ViT模型原封不动迁移过来了，替换了encoder，虽带来了精度的提升但模型的计算量和参数量都非常大。</p>
+<blockquote>
+<p>ViT(Vision Transformer)首次证明了纯基于transformer的图像分类模型可以达到sota。</p>
+</blockquote>
+</li>
+<li><p>CNN是通过不断地堆积卷积层来完成对图像从局部信息到全局信息的提取,不断堆积的卷积层慢慢地扩大了感受野直至覆盖整个图像;但是transformer并不假定从局部信息开始,而且一开始就可以拿到全局信息,学习难度更大一些,但transformer学习长依赖的能力更强。</p>
+</li>
+<li><p>CNN结构更适合底层特征,Transformer更匹配高层语义。二者无绝对差别,就是看问题的尺度差异,本质都是消息传递。</p>
+</li>
+<li><p>现在对transformer理解还不充分,为啥Transformer之后没有改变分辨率,还要用Decoder来恢复原image的分辨率(得看看transformer那篇论文,或者评论区有好心人解答一下嘛)。</p>
+<h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><p><a href="https://blog.csdn.net/qq_40585800/article/details/112495367" target="_blank" rel="noopener">https://blog.csdn.net/qq_40585800/article/details/112495367</a></p>
+<p><a href="https://www.zhihu.com/question/437495132/answer/1656610825" target="_blank" rel="noopener">如何看待Transformer在CV上的应用前景，未来有可能替代CNN吗？www.zhihu.com</a></p>
+</li>
+</ul>
+
       
 
 		
@@ -192,7 +335,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/cassieyy.github.io/categories/Semantic-Seg//" class="article-tag-list-link color3">Semantic Seg</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -285,7 +450,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析问题"><span class="toc-number">2.</span> <span class="toc-text">分析问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">3.</span> <span class="toc-text">解决方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整体网络结构"><span class="toc-number">4.</span> <span class="toc-text">整体网络结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#损失函数设计"><span class="toc-number">5.</span> <span class="toc-text">损失函数设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验结果"><span class="toc-number">6.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">7.</span> <span class="toc-text">写在后面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章："><span class="toc-number">8.</span> <span class="toc-text">参考文章：</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -452,7 +617,7 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Paper reading notes in Week1</a>
+                <a href="javascript:void(0)" class="js-tag color1">Git GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,15 +629,27 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Attention mechanism</a>
+                <a href="javascript:void(0)" class="js-tag color2">Transformer</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Git GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color4">Paper reading notes in Week1</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">paper notes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Attention mechanism</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASPP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Multi-scale</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -484,27 +661,7 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ASPP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Github</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Multi-scale</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Group conv</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Separable conv</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -513,6 +670,18 @@ var _hmt = _hmt || [];
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">开源</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Group conv</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Separable conv</a>
               </li>
             
             <div class="clearfix"></div>
