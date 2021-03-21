@@ -289,36 +289,9 @@
 <p>2.2 字节流使用场景总结</p>
 <p>​      字节流适合所有类型文件的数据传输,因为字节(Byte)是电脑中表示信息含义的最小单位(通常情况下一个ACSII码就是一个字节的空间来存放)。</p>
 <p>​      如果是音频文件、图片、歌曲，就用字节流好,如果是关系到中文(文本)的,用字符流好。</p>
-<h2 id="三-字符流"><a href="#三-字符流" class="headerlink" title="[三]字符流"></a>[三]字符流</h2><p>3.1 字符流介绍</p>
-<p>​      字符流按字符(一个字符占两个字节)读数据：一次读两个字节，返回了这两个字节所对应的字符的int型数值(编码)。写入文件时把这两个字节的内容解码成这个字符在Unicode码下对应的二进制数据写入。即把原始文件中的二进制数据以字符形式读出,再将字符以二进制形式写入,所以得到的文件以字符方式存储。字符流只能处理字符或者字符串。</p>
-<p>3.2 字符流使用场景</p>
-<p>​      字符流只能够处理纯文本(中文)数据，其他类型数据不行，但是字符流处理文本要比字节流处理文本要方便。</p>
-<h2 id="四-字节流与字符流区别"><a href="#四-字节流与字符流区别" class="headerlink" title="[四]字节流与字符流区别"></a>[四]字节流与字符流区别</h2><p>​      1.字节流没有使用到缓冲区(内存),是与文件本身直接操作的。字符流使用到了缓冲区,在缓冲区的数据需要使用close()或者flush()方法强制刷新缓冲区将其输出(程序没有关闭数据是不会从缓冲区输出出来的)。</p>
-<p>​      2.字节流在操作文件时,即使不关闭资源(close方法),文件也能输出,但是如果字符流不使用close方法的话,则不会输出任何内容。</p>
-<p>​      3.在所有的硬盘上保存文件或进行传输的时候都是以字节的方法进行的,包括图片也是按字节完成,而字符是只有在内存中才会形成的,所以使用字节的操作是最多的。</p>
-<p>​      4.字节流提供了处理任何类型的IO操作的功能,但它不能直接处理Unicode字符,而字符流就可以。</p>
-<p>​      5. 字节流按字节读数据,而字节不需要编码、解码,只有字节与字符之间转换时才需要编码、解码！</p>
-<h2 id="五-字节流与字符流相互转换-编码解码"><a href="#五-字节流与字符流相互转换-编码解码" class="headerlink" title="[五]字节流与字符流相互转换(编码解码)"></a>[五]字节流与字符流相互转换(编码解码)</h2><p>​       字节流是最基本的,主要用在处理二进制数据,它是按字节来处理的,但实际中很多的数据是文本,所以在提出字节流的基础上又提出了字符流的概念。</p>
-<p>​      字节流与字符流之间的相互转换,以python为例,将string转化成bytes首先需要进行编码(encode)。而将 bytes 转化成 string 需要进行解码(decode)。</p>
-<p>5.1 string to bytes by utf-8(用utf-8规则将字符流编码成字节流)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; name &#x3D; &#39;cassie&#39;</span><br><span class="line">&gt;&gt;&gt; name_utf8 &#x3D; name.encode(encoding&#x3D;&#39;utf-8&#39;)</span><br><span class="line">&gt;&gt;&gt; type(name_utf8)</span><br><span class="line">&lt;type &#39;str&#39;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>5.2 string to bytes by gb2312(用gb2312规则将字符流编码成字节流)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; name &#x3D; &#39;cassie&#39;</span><br><span class="line">&gt;&gt;&gt; name_gb2312 &#x3D; name.encode(encoding&#x3D;&#39;gb2312&#39;)</span><br><span class="line">&gt;&gt;&gt; type(name_gb2312)</span><br><span class="line">&lt;type &#39;str&#39;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>5.3 bytes to string 将bytes解码成 string,默认为utf-8规则</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; name_string &#x3D; name_utf8.decode()</span><br><span class="line">&gt;&gt;&gt; type(name_string)</span><br><span class="line">&lt;type &#39;unicode&#39;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>5.4 bytes to string by gb2312 按gb2312规则将bytes解码成 string</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; name_string_gb2312 &#x3D; name_gb2312.decode(&#39;gb2312&#39;)</span><br><span class="line">&gt;&gt;&gt; type(name_string_gb2312)</span><br><span class="line">&lt;type &#39;unicode&#39;&gt;</span><br></pre></td></tr></table></figure>
-
-<p>(有没有发现5.1-5.4有问题呀,是的！它的输出全都是意料之外的,我天亮起来看！！大概率是我python版本问题,本地还是2.X)</p>
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>​      在做项目的时候一直纳闷，为什么我们得到图片结果以后，甲方一定要让我们把输出的图片编码，还问我们有没有.dcm文件的编码解码程序，我们直接把图片保存在服务器的某个文件夹下不就好了吗，以及用python的flask框架在传文字和图片的时候为什么需要编码解码，现在想想这两个问题确实弱智(不是)，虽然醒悟的晚，但现在总算明白了。</p>
-<h2 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h2><p><a href="https://www.cnblogs.com/DONGb/p/7844123.html" target="_blank" rel="noopener">字节流与字符流的区别详解 - Oo。 - 博客园</a></p>
-<p><a href="https://blog.csdn.net/sinat_41104353/article/details/79283619?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.channel_param" target="_blank" rel="noopener">Python3 中 bytes 和 string 之间的互相转换</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/126296075" target="_blank" rel="noopener">纵樽前痛饮：字节流与字符流</a></p>
-<p><a href="https://blog.csdn.net/sinat_41104353/article/details/79283619?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.channel_param" target="_blank" rel="noopener">Python3 中 bytes 和 string 之间的互相转换</a></p>
-
+        
+          <a class="article-more-a" href="/cassieyy.github.io/2020/10/03/%E5%AD%97%E8%8A%82%E6%B5%81%E4%B8%8E%E5%AD%97%E7%AC%A6%E6%B5%81/#more">more >></a>
+        
       
 
 		
