@@ -6,24 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://cassieyy.github.io/cassieyy.github.io">
-  <title>分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv) | Hi~ This is Cassie&#39;s blog!</title>
+  <title>paper2021-1 | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="写在前面今天有一个小小的idea,需要用到分组卷积,于是我翻开了notebook,发现之前对两种卷积的分析都太简单了,这次再复习竟不知道啥是啥,于是痛定思痛,决定以后把经典的东西,都仔仔细细地写在这里,供大家批评,鞭策自己进步！ 请注意题目顺序先分组卷积再深度可分离卷积,后面就知道为什么一定要按这样的顺序了。">
+  <meta name="description" content="写在前面CoTr: Effciently Bridging CNN and Transformer for 3D Medical Image Segmentation是3.4刚投稿的一篇3D医学图像分割论文 作者西北工业大学夏勇老师团队和沈春华老师团队 论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2103.03024.pdf 代码地址(Pytorch):YtongXie&#x2F;CoTr(官方)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv)">
-<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/index.html">
+<meta property="og:title" content="paper2021-1">
+<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
-<meta property="og:description" content="写在前面今天有一个小小的idea,需要用到分组卷积,于是我翻开了notebook,发现之前对两种卷积的分析都太简单了,这次再复习竟不知道啥是啥,于是痛定思痛,决定以后把经典的东西,都仔仔细细地写在这里,供大家批评,鞭策自己进步！ 请注意题目顺序先分组卷积再深度可分离卷积,后面就知道为什么一定要按这样的顺序了。">
+<meta property="og:description" content="写在前面CoTr: Effciently Bridging CNN and Transformer for 3D Medical Image Segmentation是3.4刚投稿的一篇3D医学图像分割论文 作者西北工业大学夏勇老师团队和沈春华老师团队 论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2103.03024.pdf 代码地址(Pytorch):YtongXie&#x2F;CoTr(官方)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic3.zhimg.com/v2-741e4b53627670c8c470dd8df1d93d6a_b.png">
-<meta property="og:image" content="https://pic1.zhimg.com/v2-52219e882f901306014eeae0eb93fea4_b.png">
-<meta property="article:published_time" content="2020-09-09T01:44:10.000Z">
-<meta property="article:modified_time" content="2020-09-09T01:48:52.943Z">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/Fig1.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/CoTr.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/encoder.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/detrans.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/deformable.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/head.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/decoder.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/table1.png">
+<meta property="og:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/Fig5.png">
+<meta property="article:published_time" content="2021-03-22T02:22:13.000Z">
+<meta property="article:modified_time" content="2021-03-22T05:43:31.516Z">
 <meta property="article:author" content="Cassie">
-<meta property="article:tag" content="Group conv">
-<meta property="article:tag" content="Separable conv">
+<meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic3.zhimg.com/v2-741e4b53627670c8c470dd8df1d93d6a_b.png">
+<meta name="twitter:image" content="https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/Fig1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hi~ This is Cassie&#39;s blog!" type="application/atom+xml">
   
@@ -161,9 +167,9 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-分组卷积-Group-conv-与深度可分离卷积-Depthwise-separable-conv" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-paper2021-1" class="article article-type-post " itemscope itemprop="blogPost">
   <div align="center" class="post-count">
-    字数：1.5k字 | 预计阅读时长：5分钟
+    字数：1.4k字 | 预计阅读时长：6分钟
   </div>
   <div class="article-inner">
     
@@ -171,76 +177,78 @@
         
   
     <h1 class="article-title" itemprop="name">
-      分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv)
+      paper2021-1
     </h1>
   
 
         
-        <a href="/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/" class="archive-article-date">
-  	<time datetime="2020-09-09T01:44:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-09</time>
+        <a href="/cassieyy.github.io/2021/03/22/paper2021-1/" class="archive-article-date">
+  	<time datetime="2021-03-22T02:22:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-22</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>今天有一个小小的idea,需要用到分组卷积,于是我翻开了notebook,发现之前对两种卷积的分析都太简单了,这次再复习竟不知道啥是啥,于是痛定思痛,决定以后把经典的东西,都仔仔细细地写在这里,供大家批评,鞭策自己进步！</p>
-<p>请注意题目顺序<strong>先</strong>分组卷积<strong>再</strong>深度可分离卷积,后面就知道为什么一定要按这样的顺序了。</p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><em>CoTr: Effciently Bridging CNN and Transformer for 3D Medical Image Segmentation</em>是3.4刚投稿的一篇3D医学图像分割论文 作者西北工业大学夏勇老师团队和沈春华老师团队</p>
+<p>论文地址：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/2103.03024.pdf">https://arxiv.org/pdf/2103.03024.pdf</a></p>
+<p>代码地址(Pytorch):<a href="https://link.zhihu.com/?target=https%3A//github.com/YtongXie/CoTr">YtongXie/CoTr</a>(官方)</p>
+<p>数据集(BCV dataset):<a href="https://link.zhihu.com/?target=https%3A//www.synapse.org/%23!Synapse%3Asyn3193805/wiki/217789">https://www.synapse.org/#!Synapse:syn3193805/wiki/217789</a></p>
 <a id="more"></a>
 
-<h2 id="一-分组卷积-Group-conv"><a href="#一-分组卷积-Group-conv" class="headerlink" title="[一]分组卷积(Group conv)"></a>[一]分组卷积(Group conv)</h2><ul>
-<li>论文地址：<a href="https://arxiv.org/pdf/1605.06489.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1605.06489.pdf</a></li>
-<li>解释</li>
-</ul>
-<p>​      分组卷积,即ResNeXt,是受到Inception和AlexNet的启发。Iception 的论文中提到,对于卷积来说,卷积核可以看做一个<strong>三维的滤波器</strong>:通道维+空间维(Feature Map 的宽和高),常规的卷积操作其实就是实现<strong>通道相关性</strong>和<strong>空间相关性</strong>的<strong>联合映射</strong>。Inception 模块的背后存在这样的一种假设:卷积层通道间的相关性和空间相关性是可以<strong>退耦合</strong>的,将它们分开映射,能达到更好的效果.具体来说,经过不同卷积路径得到的特征图之间的耦合性较低,关注的主要特征不同,可以得到互为补充的特征图,以更完整的表示图像.</p>
-<p>以下就是论文中提到的分组卷积可视化图：</p>
-<p><img src="https://pic3.zhimg.com/v2-741e4b53627670c8c470dd8df1d93d6a_b.png" alt="img"></p>
-<p>(a)为常规卷积(b)为分组卷积</p>
-<p>(a)是常规卷积(b)是分组卷积,得到多个互补的特征,然后将得到的特征进行concat组合,作为最终的输出特征图。 </p>
-<ul>
-<li>举例</li>
-</ul>
-<blockquote>
-<p> 举个例子比较参数量：假设input.shape = [c1, H, W] output.shape = [c2, H, W]                                                                            (a)常规卷积参数量=<strong>kernel_size * kernel_size * c1 * c2</strong>                                                                                                               (b)分组卷积参数量=kernel_size <em> kernel_size </em> (c1/g) <em> (c2/g) </em> g = (<strong>kernel_size * kernel_size * c1 * c2</strong>)/g其中g为分组数量                     </p>
-</blockquote>
-<p>上面的例子我们可以清楚地看到,得到相同的output.shape,分组卷积的参数量是常规卷积的1/g,其中g是分组的个数(上图中是两个)。 </p>
-<ul>
-<li>分析</li>
-</ul>
-<p>官方分析：Alex认为group conv的方式能够增加 filter之间的对角相关性,而且能够减少训练参数,不容易过拟合,这类似于正则的效果。</p>
-<ul>
-<li>代码实现(pytorch提供了相关参数,以2d为例)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">...</span><br><span class="line">model &#x3D; nn.Conv2d(in_channels &#x3D; in_channel, out_channels &#x3D; out_channel, </span><br><span class="line">kernel_size &#x3D; kernel_size, stride &#x3D; stride, padding &#x3D; 1, dilation &#x3D; dilation, group &#x3D; group_num)</span><br></pre></td></tr></table></figure>
+<h2 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h2><ol>
+<li>单纯CNN做encoder由于感受野受限，无法捕获长距离依赖关系（虽然也有non-local、dilated conv操作但终究摆脱不了卷积核固定从而感受野受限的问题）。</li>
+<li>ViT作为第一个将transformer应用于图像分类任务的模型,其模型大小有300M; 随后出现的<strong>SETR</strong>就是直接将ViT作为encoder+传统的CNN decoder实现语义分割; <strong>TransUNet</strong>是先CNN做encoder抽取feature map后,将最后一层输出作为ViT的输入,这一整体作为encoder,在CNN的encoder和decoder之间保留了skip connection。这些模型存在问题(1)训练时间长(transformer中self-attention太耗时间了)(2)self-attention的时候对每个像素点都是平等看待的。最重要的是,3D网络中,无法应用传统的transformer处理多尺度和高分辨率的feature maps,因为计算开销太大。</li>
+</ol>
+<img src="/cassieyy.github.io/2021/03/22/paper2021-1/Fig1.png" class>
 
-<p>这里要注意,group_num要能被in_channels和out_channels整除才行,否则会报错</p>
-<h2 id="二-深度可分离卷积"><a href="#二-深度可分离卷积" class="headerlink" title="[二]深度可分离卷积"></a>[二]深度可分离卷积</h2><ul>
-<li>论文地址：<a href="https://arxiv.org/pdf/1704.04861.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1704.04861.pdf</a></li>
-<li>解释</li>
-</ul>
-<p>深度可分离卷积是MobileNet的精髓,它由deep_wise卷积和point_wise卷积两部分组成。我以前一直觉得深度可分离卷积是极端化的分组卷积(把group数量设为Cin个就行)。但今天再次思考一下,发现他们很大的不同在于,<strong>分组卷积</strong>只进行<strong>一次卷积</strong>(一个nn.Conv2d即可实现),不同group的卷积结果concat即可,而<strong>深度可分离卷积</strong>是进行了<strong>两次卷积</strong>操作,第一次先进deep_wise卷积(即收集每一层的特征),kernel_size = K<em>K</em>1,第一次卷积总的参数量为K<em>K</em>Cin,第二次是为了得到Cout维度的输出,kernel_size = 1<em>1</em>Cin,第二次卷积总的参数量为1<em>1</em>Cin*Cout。第二次卷积输出即为深度可分离卷积的输出。</p>
-<p>以下就是论文中提到的深度可分离卷积可视化图：</p>
-<p><img src="https://pic1.zhimg.com/v2-52219e882f901306014eeae0eb93fea4_b.png" alt="img"></p>
-<p>(a)是常规卷积(b)(c)是深度可分离卷积,(b)是depth_wise conv,用于收集每一channel的特征,(c)是point_wise conv,将原通道数为Cin的feature map 调整为Cout。</p>
-<ul>
-<li>举例</li>
-</ul>
-<blockquote>
-<p> 举个例子比较参数量：假设input.shape = [c1, H, W] output.shape = [c2, H, W]                                                                          (a)常规卷积参数量=kernel_size <em> kernel_size </em> c1 <em> c2                                                                                                                    (b)深度可分离卷积参数量=kernel_size </em> kernel_size <em> c1 + 1</em> 1* c2 </p>
-</blockquote>
-<p>上面的例子我们可以清楚地看到,得到相同的output.shape,直观看上去,深度可分离卷积的参数量比常规卷积少了一个数量级。</p>
-<ul>
-<li>分析</li>
-</ul>
-<p>深度可分离卷积同时考虑图像的区域和通道(深度可分离卷积首先只考虑区域depth_wise,然后再只考虑通道point_wise)实现了图像的区域和通道的完全分离。</p>
-<ul>
-<li>代码实现(pytorch)</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">...</span><br><span class="line">model &#x3D; nn.Sequential(</span><br><span class="line">        nn.Conv2d(in_channels &#x3D; in_channel, out_channels &#x3D; in_channel, </span><br><span class="line">kernel_size &#x3D; kernel_size, stride &#x3D; stride, padding &#x3D; 1, dilation &#x3D; dilation, group &#x3D; in_channel),</span><br><span class="line">        nn.Conv2d(in_channels &#x3D; in_channel, out_channels &#x3D; out_channel kernel_size &#x3D; 1, padding &#x3D; 0)</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>1.针对问题1,本文第一次将transformer用在3D分割模型中;</p>
+<p>2.针对问题2,本文应用了deformable self-attention mechanism,仅对关键点进行self-attention操作,从而大大降低了计算开销,来解决对多尺度和高分辨率的feature map进行self-attention操作时的计算开销和空间复杂度。</p>
+<h2 id="整体网络结构"><a href="#整体网络结构" class="headerlink" title="整体网络结构"></a>整体网络结构</h2><p>以下是作者提到的整体的网络结构,主要由3部分：CNN-encoder、DeTrans-encoder、Decoder组成。</p>
+<img src="/cassieyy.github.io/2021/03/22/paper2021-1/CoTr.png" class>
 
-<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>之所以在写在前面中提到,本文的题目一定要先是分组卷积再是深度可分离卷积,因为在我看来后者是前者的极端情况(分组卷积的group设为in_channel,即每组的channel数量为1),尽管形式上两者有比较大的差别:分组卷积只进行一次卷积操作即可,而深度可分离卷积需要进行两次——先depth_wise再point_wise卷积,但他们本质上是一样的。</p>
-<p>深度可分离卷积进行一次卷积是无法达到输出指定维度的tensor的,这是由它将group设为in_channel决定的,输出的tensor通道数只能是in_channel,不能达到要求,所以又用了11的卷积改变最终输出的通道数。这样的想法也是自然而然的,BottleNeck不就是先1 <em> 1卷积减少参数量再3 </em> 3卷积feature map,最后再1 <em> 1恢复原来的通道数,所以BottleNeck的目的就是减少参数量。提到BottleNeck结构就是想说明1</em>1卷积经常用来改变通道数。</p>
-<p>这样,分组卷积和深度可分离卷积就能很好地联系起来并牢牢掌握啦！！！</p>
+<p><strong>part1 CNN-encoder</strong></p>
+<img src="/cassieyy.github.io/2021/03/22/paper2021-1/encoder.png" class>
+
+<p>这部分没有什么特别的,CNN encoder包含四层。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">def forward(self, x):</span><br><span class="line">        out &#x3D; []</span><br><span class="line">        x &#x3D; self.conv1(x)</span><br><span class="line">        x &#x3D; self.norm1(x)</span><br><span class="line">        x &#x3D; self.nonlin(x) # 第一层conv-BN-ReLU</span><br><span class="line">        out.append(x)</span><br><span class="line"></span><br><span class="line">        x &#x3D; self.layer1(x) # 第二层是3个resnet block</span><br><span class="line">        out.append(x)</span><br><span class="line">        x &#x3D; self.layer2(x) # 第三层是3个resnet block</span><br><span class="line">        out.append(x)</span><br><span class="line">        x &#x3D; self.layer3(x) # 第四层是2个resnet block</span><br><span class="line">        out.append(x)</span><br><span class="line"></span><br><span class="line">        return out</span><br></pre></td></tr></table></figure>
+
+<p><strong>part2 DeTrans-encoder</strong></p>
+<img src="/cassieyy.github.io/2021/03/22/paper2021-1/detrans.png" class>
+
+<p>这部分是对CNN-encoder的feature maps做进一步的加工,是本文的重点部分,下面按自左向右的方向分析。</p>
+<p>跟TransUnet有点像的是,他们是把<strong>feature maps + posemb(feature maps)</strong>而不是像SETR那样直接把<strong>raw image + posemb(raw image)</strong>喂到transformer里。CoTr与TransUnet不同的是,CoTr的feature maps是一个集合,是multiscale的feature maps,而TransUnet的eature map只是CNN最后一层输出,即single feature map。</p>
+<blockquote>
+<p>3D网络的posemb()操作是分别对D, H, W三个维度编码再cat</p>
+</blockquote>
+<p>DeTrans堆叠6个layer,每个DeTrans Layer结构如下：</p>
+<img src="/cassieyy.github.io/2021/03/22/paper2021-1/deformable.png" class>
+
+<p>与一般self-attention平等地对待每个像素不同,本文中只对一些关键的采样点进行self-attention。至于这个key point 和 reference point怎么选,论文中只说key point location around reference location,没有其他详细说明。</p>
+<p>代码里:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">get_reference_points(spatial_shapes, valid_ratios, device):</span><br><span class="line">        reference_points_list &#x3D; []</span><br><span class="line">        for lvl, (D_, H_, W_) in enumerate(spatial_shapes):</span><br><span class="line"></span><br><span class="line">            ref_d, ref_y, ref_x &#x3D; torch.meshgrid(torch.linspace(0.5, D_ - 0.5, D_, dtype&#x3D;torch.float32, device&#x3D;device),</span><br><span class="line">                                                 torch.linspace(0.5, H_ - 0.5, H_, dtype&#x3D;torch.float32, device&#x3D;device),</span><br><span class="line">                                                 torch.linspace(0.5, W_ - 0.5, W_, dtype&#x3D;torch.float32, device&#x3D;device))</span><br><span class="line"></span><br><span class="line">            ref_d &#x3D; ref_d.reshape(-1)[None] &#x2F; (valid_ratios[:, None, lvl, 0] * D_)</span><br><span class="line">            ref_y &#x3D; ref_y.reshape(-1)[None] &#x2F; (valid_ratios[:, None, lvl, 2] * H_)</span><br><span class="line">            ref_x &#x3D; ref_x.reshape(-1)[None] &#x2F; (valid_ratios[:, None, lvl, 1] * W_)</span><br><span class="line"></span><br><span class="line">            ref &#x3D; torch.stack((ref_d, ref_x, ref_y), -1)   # D W H</span><br><span class="line">            reference_points_list.append(ref)</span><br><span class="line">        reference_points &#x3D; torch.cat(reference_points_list, 1)</span><br><span class="line">        # reference_points 乘了一个valid_ratios</span><br><span class="line">        reference_points &#x3D; reference_points[:, :, None] * valid_ratios[:, None]</span><br><span class="line">        return reference_points</span><br><span class="line"></span><br><span class="line"># valid_ratios是下面函数得来的</span><br><span class="line"># mask是在posemb时生成的维度为B, D, H, W的bool类型tensor mask中值为1</span><br><span class="line"># 这里我不太理解,因为前面mask的定义是全0的torch.zeros((fea.shape[0], fea.shape[2], fea.shape[3], fea.shape[4]), dtype&#x3D;torch.bool)</span><br><span class="line"># 也就是这里的valid_ratio是一个定值而不是网络学到的。</span><br><span class="line">def get_valid_ratio(self, mask): </span><br><span class="line">        _, D, H, W &#x3D; mask.shape</span><br><span class="line">        valid_D &#x3D; torch.sum(~mask[:, :, 0, 0], 1)</span><br><span class="line">        valid_H &#x3D; torch.sum(~mask[:, 0, :, 0], 1)</span><br><span class="line">        valid_W &#x3D; torch.sum(~mask[:, 0, 0, :], 1)</span><br><span class="line"></span><br><span class="line">        valid_ratio_d &#x3D; valid_D.float() &#x2F; D</span><br><span class="line">        valid_ratio_h &#x3D; valid_H.float() &#x2F; H</span><br><span class="line">        valid_ratio_w &#x3D; valid_W.float() &#x2F; W</span><br><span class="line">        valid_ratio &#x3D; torch.stack([valid_ratio_d, valid_ratio_w, valid_ratio_h], -1)</span><br><span class="line">        return valid_ratio</span><br></pre></td></tr></table></figure>
+
+<p>sampling_locations = reference_points + sampling_offsets / offset_normalizer</p>
+<p><strong>MS-DMSA(multiscale-deformable multi self-attention)</strong></p>
+<p>这部分作者讲解的太少了,主要是计算head的这个公式:</p>
+<img src="/cassieyy.github.io/2021/03/22/paper2021-1/head.png" class>
+
+<p><strong>红框</strong>里表示的是atten_weight=F.softmax(nn.Linear(…)(query))得到,<strong>蓝框</strong>里是rescaled的key points,<strong>黄框</strong>中的是sampling offset=nn.Linear(…)(query),也是由一个全连接学到的。</p>
+<p>以上就是一个head的output。每个Deformable Transformer Layer主要包括MSA和MLP(即feed forward network),multihead的每个head计算结束后,cat起来用一个全连接层融合这些特征信息,后进行MLP,中间穿插LN,这就是完整的Deformable Transformer Layer。</p>
+<p><strong>part3 Decoder</strong></p>
+<img src="/cassieyy.github.io/2021/03/22/paper2021-1/decoder.png" class>
+
+<p>就是经典的CNN逐步上采样,反卷积替代upsample。backbone用resblock,这里的skip connection采用的是element-wise add非cat操作。</p>
+<h2 id="损失函数设计"><a href="#损失函数设计" class="headerlink" title="损失函数设计"></a>损失函数设计</h2><p>采用loss = Diceloss + CEloss</p>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><img src="/cassieyy.github.io/2021/03/22/paper2021-1/table1.png" class>
+
+<p>CoTr结构是由1.CNN encoder + 2.DeTrans + 3.Decoder组成</p>
+<p>红框中是不用CNN encoder的结果,与SETR(ViT + Decoder)相比,证明了deformble atten mechaism的有效,与CoTr相比,证明了CNN encoder先要提取图像特征的必要性;</p>
+<p>黄框中是不用DeTrans、将其替换为ASPP、PP、Non-local的结果,与最后一行相比,可以看到用了DeTrans,Dice提升了1.4%且DeTrans效果要比ASPP、PP、Non-local好;</p>
+<p>绿框中TransUnet是CNN encoder + ViT + Decoder组成, 第二行是CNN encoder每个stage只有1个Resblock, 第三行是CNN encoder每个stage只有2个Resblock,最后一行的CNN encoder是有(3, 3, 2)个。</p>
+<img src="/cassieyy.github.io/2021/03/22/paper2021-1/Fig5.png" class>
+
+<h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><p>整个工程的代码非常复杂,MS-DMSA没有看的很明白,求attention那里,只用到Z_q而没有用到Z_k也是让我费解的。</p>
 
       
 
@@ -259,11 +267,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Group conv</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Separable conv</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
         		</li>
       		
 		</ul>
@@ -275,7 +279,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/cassieyy.github.io/categories/Convolution//" class="article-tag-list-link color2">Convolution</a>
+        			<a href="/cassieyy.github.io/categories/Semantic-Seg//" class="article-tag-list-link color3">Semantic Seg</a>
         		</li>
       		
 		</ul>
@@ -330,7 +334,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2021/03/22/paper2021-1/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -344,18 +348,9 @@
   
 <nav id="article-nav">
   
-    <a href="/cassieyy.github.io/2020/09/15/%E4%BA%A7%E5%87%BA%E5%BC%8F%E5%AD%A6%E4%B9%A0Git-%E4%B8%89/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          产出式学习Git(三)
-        
-      </div>
-    </a>
   
-  
-    <a href="/cassieyy.github.io/2020/09/08/%E4%BA%A7%E5%87%BA%E5%BC%8F%E5%AD%A6%E4%B9%A0Git-%E4%BA%8C/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">产出式学习Git(二)</div>
+    <a href="/cassieyy.github.io/2021/02/28/paper2021-0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">paper2021_0</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -382,7 +377,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一-分组卷积-Group-conv"><span class="toc-number">2.</span> <span class="toc-text">[一]分组卷积(Group conv)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-深度可分离卷积"><span class="toc-number">3.</span> <span class="toc-text">[二]深度可分离卷积</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">4.</span> <span class="toc-text">写在后面</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#写在前面"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析问题"><span class="toc-number">2.</span> <span class="toc-text">分析问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方法"><span class="toc-number">3.</span> <span class="toc-text">解决方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#整体网络结构"><span class="toc-number">4.</span> <span class="toc-text">整体网络结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#损失函数设计"><span class="toc-number">5.</span> <span class="toc-text">损失函数设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验结果"><span class="toc-number">6.</span> <span class="toc-text">实验结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#写在后面"><span class="toc-number">7.</span> <span class="toc-text">写在后面</span></a></li></ol>
                     </div>
                 </span>
             </div>

@@ -64,8 +64,8 @@
 			</ul>
 		</nav>
 		<nav>
-			<a>总文章数 15</a>
-			<a>总字数 <span class="post-count">28.8k</span></a>
+			<a>总文章数 16</a>
+			<a>总字数 <span class="post-count">30.2k</span></a>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -155,6 +155,104 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-paper2021-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div align="center" class="post-count">
+    字数：1.4k字 | 预计阅读时长：6分钟
+  </div>
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/cassieyy.github.io/2021/03/22/paper2021-1/">paper2021-1</a>
+    </h1>
+  
+
+        
+        <a href="/cassieyy.github.io/2021/03/22/paper2021-1/" class="archive-article-date">
+  	<time datetime="2021-03-22T02:22:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><em>CoTr: Effciently Bridging CNN and Transformer for 3D Medical Image Segmentation</em>是3.4刚投稿的一篇3D医学图像分割论文 作者西北工业大学夏勇老师团队和沈春华老师团队</p>
+<p>论文地址：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/pdf/2103.03024.pdf">https://arxiv.org/pdf/2103.03024.pdf</a></p>
+<p>代码地址(Pytorch):<a href="https://link.zhihu.com/?target=https%3A//github.com/YtongXie/CoTr">YtongXie/CoTr</a>(官方)</p>
+<p>数据集(BCV dataset):<a href="https://link.zhihu.com/?target=https%3A//www.synapse.org/%23!Synapse%3Asyn3193805/wiki/217789">https://www.synapse.org/#!Synapse:syn3193805/wiki/217789</a></p>
+        
+          <a class="article-more-a" href="/cassieyy.github.io/2021/03/22/paper2021-1/#more">more >></a>
+        
+      
+
+		
+		
+		  <div hidden="hidden"></div>
+		
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/cassieyy.github.io/categories/Semantic-Seg//" class="article-tag-list-link color3">Semantic Seg</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/cassieyy.github.io/2021/03/22/paper2021-1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-paper2021-0" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div align="center" class="post-count">
@@ -280,15 +378,6 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="一-写在前面"><a href="#一-写在前面" class="headerlink" title="[一]写在前面"></a>[一]写在前面</h2><p>​      简单总结一下分别用(一直混淆的)字节流or字符流读写文件。</p>
-<h2 id="二-字节流"><a href="#二-字节流" class="headerlink" title="[二]字节流"></a>[二]字节流</h2><p>2.1 字节流介绍</p>
-<p>​      程序中的输入输出都是以流的形式保存的(输入流or输出流),流中保存的实际上全都是字节(一个字节等于一个Byte占8个bit)文件。Java提供了OutputStream、InputStream两个专门操作字节流的类。</p>
-<blockquote>
-<p>知识补充1： 计算机能存储的唯一东西就是 bytes,为了在计算机中存储东西,我们首先得将其编码(encode),例如将其转化为 bytes。 比如：要想保存音乐(以字节形式保存),我们首先得用 MP3, WAV 等将其编码；要想保存图片,我们首先得用 PNG, JPEG 等将其编码；要想保存文本,我们首先得用 ASCII, UTF-8 等将其编码. </p>
-<p>知识补充2: Unicode 是字符集,不是字符编码。Unicode 把全世界的字符都搜集并且编号了,但是没有规定具体的编码规则。编码规则有 UTF-8、GBK等。</p>
-</blockquote>
-<p>2.2 字节流使用场景总结</p>
-<p>​      字节流适合所有类型文件的数据传输,因为字节(Byte)是电脑中表示信息含义的最小单位(通常情况下一个ACSII码就是一个字节的空间来存放)。</p>
-<p>​      如果是音频文件、图片、歌曲，就用字节流好,如果是关系到中文(文本)的,用字符流好。</p>
         
           <a class="article-more-a" href="/cassieyy.github.io/2020/10/03/%E5%AD%97%E8%8A%82%E6%B5%81%E4%B8%8E%E5%AD%97%E7%AC%A6%E6%B5%81/#more">more >></a>
         
@@ -1040,105 +1129,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/cassieyy.github.io/2020/08/16/paper8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-paper6-7" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div align="center" class="post-count">
-    字数：2.3k字 | 预计阅读时长：10分钟
-  </div>
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/cassieyy.github.io/2020/08/12/paper6-7/">paper6-7</a>
-    </h1>
-  
-
-        
-        <a href="/cassieyy.github.io/2020/08/12/paper6-7/" class="archive-article-date">
-  	<time datetime="2020-08-12T09:46:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>（今天我们来介绍两篇论文,以CE-Net为主,因为CE-Net用到了PsP-Net中的block,所以我们顺带一起讲一下。semantic seg是逐像素点的分类,所以某种意义上讲semantic seg也可以称为 dense seg）</p>
-<p>《CE-Net: Context Encoder Network for 2D Medical Image Segmentation》是一篇将<strong>空洞卷积</strong>和<strong>金字塔池化</strong>结合,专门用在2D医学图像分割的paper,文章发表在IEEE transcations on medical imaging(TMI2019).</p>
-<p>论文地址：<a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/1903.02740">https://arxiv.org/abs/1903.02740</a></p>
-<p>代码实现(Pytroch)：<a href="https://link.zhihu.com/?target=https%3A//github.com/Guzaiwang/CE-Net">https://github.com/Guzaiwang/CE-Net</a>(官方实现)</p>
-<p>数据集(开源)：Kaggle上肺部、视神经、视网膜(<a href="https://link.zhihu.com/?target=https%3A//drive.grand-challenge.org/DRIVE/">https://drive.grand-challenge.org/DRIVE/</a>)、细胞分割。</p>
-        
-          <a class="article-more-a" href="/cassieyy.github.io/2020/08/12/paper6-7/#more">more >></a>
-        
-      
-
-		
-		
-		  <div hidden="hidden"></div>
-		
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">paper notes</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/cassieyy.github.io/categories/medical-image-process-semantic-segmentation//" class="article-tag-list-link color5">medical image process, semantic segmentation</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/cassieyy.github.io/2020/08/12/paper6-7/">展开全文 >></a>
         </p>
       
 
