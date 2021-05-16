@@ -5,13 +5,13 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="https://cassieyy.github.io">
+  <link rel="dns-prefetch" href="https://cassieyy.github.io/cassieyy.github.io">
   <title>分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv) | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="写在前面今天有一个小小的idea,需要用到分组卷积,于是我翻开了notebook,发现之前对两种卷积的分析都太简单了,这次再复习竟不知道啥是啥,于是痛定思痛,决定以后把经典的东西,都仔仔细细地写在这里,供大家批评,鞭策自己进步！ 请注意题目顺序先分组卷积再深度可分离卷积,后面就知道为什么一定要按这样的顺序了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分组卷积(Group conv)与深度可分离卷积(Depthwise separable conv)">
-<meta property="og:url" content="https://cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/index.html">
+<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
 <meta property="og:description" content="写在前面今天有一个小小的idea,需要用到分组卷积,于是我翻开了notebook,发现之前对两种卷积的分析都太简单了,这次再复习竟不知道啥是啥,于是痛定思痛,决定以后把经典的东西,都仔仔细细地写在这里,供大家批评,鞭策自己进步！ 请注意题目顺序先分组卷积再深度可分离卷积,后面就知道为什么一定要按这样的顺序了。">
 <meta property="og:locale" content="en_US">
@@ -330,7 +330,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/09/09/%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF-Group-conv-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%8F%AF%E5%88%86%E7%A6%BB%E5%8D%B7%E7%A7%AF-Depthwise-separable-conv/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -557,11 +557,11 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Git GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color4">Paper reading notes in Week1</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Paper reading notes in Week1</a>
+                <a href="javascript:void(0)" class="js-tag color1">Git GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -577,7 +577,23 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Gate CNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Attention</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASPP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -589,19 +605,7 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ASPP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Multi-scale</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Gate CNN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Attention</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -610,10 +614,6 @@ var _hmt = _hmt || [];
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Separable conv</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Github</a>
               </li>
             
             <div class="clearfix"></div>

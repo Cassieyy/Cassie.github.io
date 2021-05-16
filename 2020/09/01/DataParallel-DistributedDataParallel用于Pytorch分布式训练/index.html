@@ -5,13 +5,13 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="https://cassieyy.github.io">
+  <link rel="dns-prefetch" href="https://cassieyy.github.io/cassieyy.github.io">
   <title>DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练 | Hi~ This is Cassie&#39;s blog!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="写在前面今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加 1model &#x3D; nn.DataParallel(model)  测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DataParallel &amp; DistributedDataParallel用于Pytorch分布式训练">
-<meta property="og:url" content="https://cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/index.html">
+<meta property="og:url" content="https://cassieyy.github.io/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/index.html">
 <meta property="og:site_name" content="Hi~ This is Cassie&#39;s blog!">
 <meta property="og:description" content="写在前面今天跑测试代码的时候遇到了以下问题:对于同一个模型,相同的参数(同一个.pth文件),加不加 1model &#x3D; nn.DataParallel(model)  测试结果相差特别多(如下图所示),加了这句mIoU是第一个结果0.8847,没加是0.4929(以mIoU为例,可以看到其他各项指标也都掉的严重),所以决定花点心思把nn.DataParallel(model)搞清楚。">
 <meta property="og:locale" content="en_US">
@@ -365,7 +365,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://cassieyy.github.io/cassieyy.github.io/2020/09/01/DataParallel-DistributedDataParallel%E7%94%A8%E4%BA%8EPytorch%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -592,11 +592,11 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Git GitHub</a>
+                <a href="javascript:void(0)" class="js-tag color4">Paper reading notes in Week1</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Paper reading notes in Week1</a>
+                <a href="javascript:void(0)" class="js-tag color1">Git GitHub</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,7 +612,23 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Gate CNN</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Attention</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ASPP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">Git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Github</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -624,19 +640,7 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ASPP</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Multi-scale</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Gate CNN</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Attention</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -645,10 +649,6 @@ var _hmt = _hmt || [];
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Separable conv</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Github</a>
               </li>
             
             <div class="clearfix"></div>
